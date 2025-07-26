@@ -70,3 +70,6 @@ fastlane/test_output
 .DS_Store
 Packages/*
 .swiftpm
+
+# Claude Code
+.claude/
