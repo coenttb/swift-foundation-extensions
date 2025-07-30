@@ -4,12 +4,14 @@ import PackageDescription
 
 extension String {
     static let dateExtensions: Self = "DateExtensions"
+    static let foundationExtensions: Self = "FoundationExtensions"
 }
 
 extension Target.Dependency {
-    static var dateExtensions: Self { .target(name: .dateExtensions) }
+    static var foundationExtensions: Self { .target(name: .foundationExtensions) }
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
     static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
+    static var dateExtensions: Self { .target(name: .dateExtensions) }
 }
 
 let package = Package(
@@ -22,11 +24,26 @@ let package = Package(
     ],
     products: [
         .library(name: .dateExtensions, targets: [.dateExtensions]),
+        .library(name: .foundationExtensions, targets: [.foundationExtensions]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.5"),
     ],
     targets: [
+        .target(
+            name: .foundationExtensions,
+            dependencies: [
+                .dependencies,
+                .dateExtensions
+            ]
+        ),
+        .testTarget(
+            name: .foundationExtensions.tests,
+            dependencies: [
+                .foundationExtensions,
+                .dependenciesTestSupport
+            ]
+        ),
         .target(
             name: .dateExtensions,
             dependencies: [
