@@ -1,49 +1,40 @@
-# DateExtensions
+# swift-foundation-extensions
 
-A comprehensive Swift package providing powerful and intuitive extensions for working with dates, times, and date components. Built with dependency injection support and comprehensive test coverage.
+[![CI](https://github.com/coenttb/swift-foundation-extensions/workflows/CI/badge.svg)](https://github.com/coenttb/swift-foundation-extensions/actions/workflows/ci.yml)
+![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+
+A collection of Swift extensions for Foundation types including dates, time intervals, and collections.
+
+## Overview
+
+This package provides two main modules:
+- **DateExtensions**: Extensions for working with dates, date components, and time intervals
+- **FoundationExtensions**: Extensions for Foundation collections and types
+
+The extensions focus on safety, convenience, and integration with the Dependencies framework for testability.
 
 ## Features
 
-### 🗓️ **Date Creation & Validation**
+### DateExtensions
+
 - Safe date initialization with automatic validation
-- Returns `nil` for invalid dates (Feb 30, hour 25, etc.)
-- Supports leap year validation
-
-### ⚡ **Date Arithmetic**
-- Intuitive operators: `date + 1.day`, `date - 2.weeks`
-- Safe arithmetic methods that return optionals
-- Complex calculations: `date + 1.year + 6.months + 2.days`
-
-### 📅 **Date Boundaries**
-- Start/end of day, week, month, year
-- First/last day of month
-- Comprehensive boundary calculations
-
-### 🔍 **Date State Checks**
-- `isToday`, `isTomorrow`, `isYesterday`
-- `isThisWeek`, `isThisMonth`, `isThisYear`
-- `isWeekend` with weekend navigation
-
-### 🕒 **Time Intervals & Formatting**
-- Convenient time constants: `TimeInterval.hour`, `.day`, `.week`
-- Duration formatting: `"2h"`, `"3d"`, `"1w"`
-- Conversion utilities
-
-### 💬 **Relative Date Formatting**
-- Natural language: `"2 hours ago"`, `"in 3 days"`
-- Smart formatting: `"yesterday"`, `"tomorrow"`
-- Automatic singular/plural handling
-
-### 🔧 **Advanced Features**
+- Date arithmetic with intuitive operators: `date + 1.day`, `date - 2.weeks`
+- Date boundaries: start/end of day, week, month, year
+- Date state checks: `isToday`, `isTomorrow`, `isWeekend`
+- Time interval constants and conversions
+- Relative date formatting: "2 hours ago", "in 3 days"
 - Business day calculations
 - Weekday navigation
 - Age calculations
-- DateComponents validation
-- Custom format styles
+- DateComponents validation and arithmetic
+
+### FoundationExtensions
+
+- Safe array subscripting with `array[safe: index]`
 
 ## Installation
 
-Add DateExtensions to your Swift Package Manager dependencies:
+Add this package to your Swift Package Manager dependencies:
 
 ```swift
 dependencies: [
@@ -53,16 +44,18 @@ dependencies: [
 
 ## Quick Start
 
+### DateExtensions
+
 ```swift
 import DateExtensions
 
 // Create dates safely
-let date = Date(year: 2025, month: 7, day: 26)! 
+let date = Date(year: 2025, month: 7, day: 26)!
 let invalidDate = Date(year: 2025, month: 2, day: 30) // Returns nil
 
 // Date arithmetic
 let tomorrow = Date() + 1.day
-let nextWeek = Date() + 1.week
+let nextWeek = Date() + 1.weekOfYear
 let complex = Date() + 1.year + 6.months + 2.days
 
 // Date boundaries
@@ -79,11 +72,21 @@ if Date().isToday {
 let pastDate = Date() - 2.hours
 print(pastDate.relativeFormatted) // "2 hours ago"
 
-let futureDate = Date() + 3.days  
+let futureDate = Date() + 3.days
 print(futureDate.relativeFormatted) // "in 3 days"
 ```
 
-## Detailed Usage
+### FoundationExtensions
+
+```swift
+import FoundationExtensions
+
+let array = [1, 2, 3]
+let value = array[safe: 5] // Returns nil instead of crashing
+let validValue = array[safe: 1] // Returns 2
+```
+
+## Usage Examples
 
 ### Date Creation
 
@@ -104,12 +107,12 @@ let invalid3 = Date(year: 2025, month: 1, day: 1, hour: 25) // nil - invalid hou
 // Basic arithmetic
 let date = Date()
 let tomorrow = date + 1.day
-let lastWeek = date - 1.week
+let lastWeek = date - 1.weekOfYear
 let nextMonth = date + 1.month
 
 // Safe arithmetic (returns optionals)
 let safeResult = date.adding(1.day)        // Date?
-let safeSubtract = date.subtracting(1.week) // Date?
+let safeSubtract = date.subtracting(1.weekOfYear) // Date?
 
 // Complex calculations
 let complex = date + 1.year + 6.months + 2.days + 3.hours + 30.minutes
@@ -120,16 +123,16 @@ let complex = date + 1.year + 6.months + 2.days + 3.hours + 30.minutes
 ```swift
 // Time components
 1.second, 30.seconds
-1.minute, 45.minutes  
+1.minute, 45.minutes
 1.hour, 12.hours
 1.day, 7.days
-1.week, 2.weeks
 1.month, 6.months
 1.year, 5.years
 
 // Calendar components
 1.weekday, 1.quarter
 1.weekOfMonth, 1.weekOfYear
+1.weeksOfYear  // Plural form for weeks
 ```
 
 ### Date Boundaries
@@ -141,12 +144,12 @@ let date = Date()
 let startOfDay = date.startOfDay     // 00:00:00
 let endOfDay = date.endOfDay         // 23:59:59
 
-// Week boundaries  
+// Week boundaries
 let startOfWeek = date.startOfWeek
 let endOfWeek = date.endOfWeek
 
 // Month boundaries
-let startOfMonth = date.startOfMonth  
+let startOfMonth = date.startOfMonth
 let endOfMonth = date.endOfMonth
 let firstDay = date.firstDayOfMonth  // Same as startOfMonth but different time
 let lastDay = date.lastDayOfMonth    // Last day at 00:00:00
@@ -163,7 +166,7 @@ let date = Date()
 
 // Relative to today
 date.isToday      // true if date is today
-date.isTomorrow   // true if date is tomorrow  
+date.isTomorrow   // true if date is tomorrow
 date.isYesterday  // true if date was yesterday
 
 // Relative to current periods
@@ -232,7 +235,7 @@ let ageAt = birthDate.age(at: someDate) // Age at specific date
 ```swift
 // Constants
 TimeInterval.minute  // 60
-TimeInterval.hour    // 3600  
+TimeInterval.hour    // 3600
 TimeInterval.day     // 86400
 TimeInterval.week    // 604800
 
@@ -248,7 +251,7 @@ interval.asDays     // 0.083...
 
 // Formatted duration
 (30.0).formattedDuration    // "30s"
-(90.0).formattedDuration    // "2m"  
+(90.0).formattedDuration    // "2m"
 (3660.0).formattedDuration  // "1.0h"
 (86500.0).formattedDuration // "1.0d"
 ```
@@ -263,7 +266,7 @@ let pastDate = now - 2.hours
 pastDate.timeAgoSince(now)    // "2 hours ago"
 pastDate.relativeFormatted    // "2 hours ago"
 
-// Future dates  
+// Future dates
 let futureDate = now + 3.days
 futureDate.timeUntil(now)     // "in 3 days"
 futureDate.relativeFormatted  // "in 3 days"
@@ -272,7 +275,7 @@ futureDate.relativeFormatted  // "in 3 days"
 let yesterday = now - 1.day
 yesterday.relativeFormatted   // "yesterday"
 
-let tomorrow = now + 1.day  
+let tomorrow = now + 1.day
 tomorrow.relativeFormatted    // "tomorrow"
 
 // Very recent
@@ -317,7 +320,7 @@ let threeDays = 1.day * 3
 let sixMonths = 1.month * 6
 
 // Subtract components
-let difference = 2.weeks - 3.days
+let difference = 2.weeksOfYear - 3.days
 
 // Negate components
 let negated = components.negated()
@@ -331,7 +334,7 @@ let components = DateComponents(year: 2025, month: 7, day: 26)
 // Basic validation
 components.isValid  // true for valid ranges
 
-// Calendar-specific validation  
+// Calendar-specific validation
 let calendar = Calendar.current
 components.isValid(for: calendar)  // true if can create valid date
 
@@ -353,9 +356,9 @@ let formatted = Date().formatted(.dateFormat("MMM d, yyyy")) // "Jul 26, 2025"
 
 ## Requirements
 
-- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 6.0+
-- Swift 5.5+
-- Dependencies framework
+- iOS 15.0+ / macOS 12.0+ / tvOS 15.0+ / watchOS 8.0+
+- Swift 5.10+
+- Xcode 15.0+
 
 ## Dependencies
 
@@ -363,43 +366,20 @@ This package uses the [Dependencies](https://github.com/pointfreeco/swift-depend
 
 ## Testing
 
-The package includes comprehensive test coverage with 67+ tests covering all functionality:
+The package includes comprehensive test coverage:
 
 ```bash
 swift test
 ```
 
-Test categories include:
-- Date initialization and validation
-- Arithmetic operations  
-- Date boundaries and state checks
-- Component properties and validation
-- TimeInterval extensions
-- Relative date formatting
-- Performance tests
-- Edge cases
+## Related Packages
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. Make sure to:
-
-1. Add tests for new functionality
-2. Update documentation
-3. Follow existing code style
-4. Ensure all tests pass
+- [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) - A dependency management library for controlling and overriding dependencies in Swift applications
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the LICENSE file for details.
+This project is licensed under the Apache 2.0 License. See LICENSE for details.
 
-## Feedback is Much Appreciated!
-  
-If you’re working on your own Swift web project, feel free to learn, fork, and contribute.
+## Contributing
 
-Got thoughts? Found something you love? Something you hate? Let me know! Your feedback helps make this project better for everyone. Open an issue or start a discussion—I’m all ears.
-
-> [Subscribe to my newsletter](http://coenttb.com/en/newsletter/subscribe)
->
-> [Follow me on X](http://x.com/coenttb)
-> 
-> [Link on Linkedin](https://www.linkedin.com/in/tenthijeboonkkamp)
+Contributions are welcome. Please open an issue or submit a pull request.
