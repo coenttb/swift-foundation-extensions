@@ -374,7 +374,7 @@ swift test
 
 ## Related Packages
 
-- [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) - A dependency management library for controlling and overriding dependencies in Swift applications
+- [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) - A dependency management library inspired by SwiftUI's "environment."
 
 ## License
 
