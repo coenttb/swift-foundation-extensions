@@ -3,7 +3,7 @@
 [![CI](https://github.com/coenttb/swift-foundation-extensions/workflows/CI/badge.svg)](https://github.com/coenttb/swift-foundation-extensions/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
-A collection of Swift extensions for Foundation types including dates, time intervals, and collections.
+*Swift extensions for Foundation types including dates, time intervals, and collections*
 
 ## Overview
 
@@ -321,9 +321,6 @@ let sixMonths = 1.month * 6
 
 // Subtract components
 let difference = 2.weeksOfYear - 3.days
-
-// Negate components
-let negated = components.negated()
 ```
 
 ### DateComponents Validation
