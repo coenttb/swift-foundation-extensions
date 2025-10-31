@@ -363,7 +363,7 @@ This package uses the [Dependencies](https://github.com/pointfreeco/swift-depend
 
 ## Testing
 
-The package includes comprehensive test coverage:
+Run tests with:
 
 ```bash
 swift test
