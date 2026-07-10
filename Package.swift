@@ -1,4 +1,4 @@
-// swift-tools-version:5.10.1
+// swift-tools-version: 6.3.1
 
 import PackageDescription
 
@@ -10,24 +10,24 @@ extension String {
 extension Target.Dependency {
     static var foundationExtensions: Self { .target(name: .foundationExtensions) }
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
-    static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
+    static var dependenciesTestSupport: Self { .product(name: "Dependencies Test Support", package: "swift-dependencies") }
     static var dateExtensions: Self { .target(name: .dateExtensions) }
 }
 
 let package = Package(
     name: "swift-foundation-extensions",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
-        .tvOS(.v15),
-        .watchOS(.v8),
+        .iOS(.v26),
+        .macOS(.v26),
+        .tvOS(.v26),
+        .watchOS(.v26),
     ],
     products: [
         .library(name: .dateExtensions, targets: [.dateExtensions]),
         .library(name: .foundationExtensions, targets: [.foundationExtensions]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.5"),
+        .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
     ],
     targets: [
         .target(
