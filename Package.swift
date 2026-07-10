@@ -54,6 +54,7 @@ let package = Package(
             name: .dateExtensions.tests,
             dependencies: [
                 .dateExtensions,
+                .foundationExtensions,
                 .dependenciesTestSupport
             ]
         ),
