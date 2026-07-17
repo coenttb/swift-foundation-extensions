@@ -15,18 +15,18 @@ import Testing
 // MARK: - Main Test Suite
 
 @Suite(
-    "FoundationExtensions Tests",
+
     .dependency(\.calendar, Calendar.current)
 )
-struct FoundationExtensionsTests {
+struct Test {
 
     // MARK: - Array Initialization Tests
 
-    @Suite("Array")
-    struct SafeArrayTests {
+    @Suite
+    struct Test {
 
-        @Test("Safe subscript returns element for valid index")
-        func testSafeSubscriptValidIndex() async throws {
+        @Test
+        func `Safe subscript returns element for valid index`() async throws {
             let array = [1, 2, 3, 4, 5]
 
             #expect(array[safe: 0] == 1)
@@ -34,24 +34,24 @@ struct FoundationExtensionsTests {
             #expect(array[safe: 4] == 5)
         }
 
-        @Test("Safe subscript returns nil for negative index")
-        func testSafeSubscriptNegativeIndex() async throws {
+        @Test
+        func `Safe subscript returns nil for negative index`() async throws {
             let array = [1, 2, 3]
 
             #expect(array[safe: -1] == nil)
             #expect(array[safe: -10] == nil)
         }
 
-        @Test("Safe subscript returns nil for out of bounds index")
-        func testSafeSubscriptOutOfBounds() async throws {
+        @Test
+        func `Safe subscript returns nil for out of bounds index`() async throws {
             let array = [1, 2, 3]
 
             #expect(array[safe: 3] == nil)
             #expect(array[safe: 10] == nil)
         }
 
-        @Test("Safe subscript works with empty array")
-        func testSafeSubscriptEmptyArray() async throws {
+        @Test
+        func `Safe subscript works with empty array`() async throws {
             let array: [Int] = []
 
             #expect(array[safe: 0] == nil)
@@ -59,8 +59,8 @@ struct FoundationExtensionsTests {
             #expect(array[safe: 1] == nil)
         }
 
-        @Test("Safe subscript works with different types")
-        func testSafeSubscriptDifferentTypes() async throws {
+        @Test
+        func `Safe subscript works with different types`() async throws {
             let stringArray = ["hello", "world", "swift"]
             let boolArray = [true, false, true]
 

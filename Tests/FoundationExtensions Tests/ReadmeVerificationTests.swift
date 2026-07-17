@@ -11,13 +11,13 @@ import Foundation
 import FoundationExtensions
 import Testing
 
-@Suite("README Verification", .dependency(\.calendar, Calendar.current))
-struct ReadmeVerificationTests {
+@Suite( .dependency(\.calendar, Calendar.current)
+struct Test {
 
     // MARK: - Quick Start Examples
 
-    @Test("Quick Start: Date creation")
-    func quickStartDateCreation() async throws {
+    @Test
+    func `Quick Start: Date creation`() async throws {
         // Lines 52-54 in README
         let date = Date(year: 2025, month: 7, day: 26)!
         let invalidDate = Date(year: 2025, month: 2, day: 30)  // Returns nil
@@ -28,8 +28,8 @@ struct ReadmeVerificationTests {
         #expect(invalidDate == nil)
     }
 
-    @Test("Quick Start: Date arithmetic")
-    func quickStartDateArithmetic() async throws {
+    @Test
+    func `Quick Start: Date arithmetic`() async throws {
         // Lines 56-59 in README
         let tomorrow = Date() + 1.day
         let nextWeek = Date() + 1.weekOfYear
@@ -40,8 +40,8 @@ struct ReadmeVerificationTests {
         #expect(complex > Date())
     }
 
-    @Test("Quick Start: Date boundaries")
-    func quickStartDateBoundaries() async throws {
+    @Test
+    func `Quick Start: Date boundaries`() async throws {
         // Lines 61-64 in README
         let startOfDay = Date().startOfDay
         let endOfMonth = Date().endOfMonth
@@ -53,8 +53,8 @@ struct ReadmeVerificationTests {
         #expect(startOfYear <= Date())
     }
 
-    @Test("Quick Start: State checks")
-    func quickStartStateChecks() async throws {
+    @Test
+    func `Quick Start: State checks`() async throws {
         // Lines 66-69 in README
         if Date().isToday {
             // Test passes if today is detected
@@ -62,8 +62,8 @@ struct ReadmeVerificationTests {
         #expect(Date().isToday == true)
     }
 
-    @Test("Quick Start: Relative formatting")
-    func quickStartRelativeFormatting() async throws {
+    @Test
+    func `Quick Start: Relative formatting`() async throws {
         // Lines 71-76 in README
         let pastDate = Date() - 2.hours
         let pastFormatted = pastDate.relativeFormatted
@@ -75,8 +75,8 @@ struct ReadmeVerificationTests {
         #expect(futureFormatted.contains("day") || futureFormatted.contains("in"))
     }
 
-    @Test("Quick Start: Safe array subscripting")
-    func quickStartSafeArraySubscripting() async throws {
+    @Test
+    func `Quick Start: Safe array subscripting`() async throws {
         // Lines 82-86 in README
         let array = [1, 2, 3]
         let value = array[safe: 5]  // Returns nil instead of crashing
@@ -88,8 +88,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date Creation Examples
 
-    @Test("Usage: Date creation basic")
-    func usageDateCreationBasic() async throws {
+    @Test
+    func `Usage: Date creation basic`() async throws {
         // Lines 94-96 in README
         let date1 = Date(year: 2025, month: 7, day: 26)
         let date2 = Date(year: 2025, month: 12, day: 25, hour: 15, minute: 30, second: 45)
@@ -101,8 +101,8 @@ struct ReadmeVerificationTests {
         #expect(date2?.second == 45)
     }
 
-    @Test("Usage: Date validation")
-    func usageDateValidation() async throws {
+    @Test
+    func `Usage: Date validation`() async throws {
         // Lines 98-101 in README
         let invalid1 = Date(year: 2025, month: 13, day: 1)  // nil - invalid month
         let invalid2 = Date(year: 2025, month: 2, day: 30)  // nil - Feb doesn't have 30 days
@@ -115,8 +115,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date Arithmetic Examples
 
-    @Test("Usage: Basic date arithmetic")
-    func usageBasicDateArithmetic() async throws {
+    @Test
+    func `Usage: Basic date arithmetic`() async throws {
         // Lines 107-111 in README
         let date = Date()
         let tomorrow = date + 1.day
@@ -128,8 +128,8 @@ struct ReadmeVerificationTests {
         #expect(nextMonth > date)
     }
 
-    @Test("Usage: Safe date arithmetic")
-    func usageSafeDateArithmetic() async throws {
+    @Test
+    func `Usage: Safe date arithmetic`() async throws {
         // Lines 113-115 in README
         let date = Date()
         let safeResult = date.adding(1.day)  // Date?
@@ -139,8 +139,8 @@ struct ReadmeVerificationTests {
         #expect(safeSubtract != nil)
     }
 
-    @Test("Usage: Complex date calculations")
-    func usageComplexDateCalculations() async throws {
+    @Test
+    func `Usage: Complex date calculations`() async throws {
         // Lines 117-118 in README
         let date = Date()
         let complex = date + 1.year + 6.months + 2.days + 3.hours + 30.minutes
@@ -150,8 +150,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Integer Extensions Examples
 
-    @Test("Usage: Time components")
-    func usageTimeComponents() async throws {
+    @Test
+    func `Usage: Time components`() async throws {
         // Lines 124-130 in README
         let _ = 1.second
         let _ = 30.seconds
@@ -167,8 +167,8 @@ struct ReadmeVerificationTests {
         let _ = 5.years
     }
 
-    @Test("Usage: Calendar components")
-    func usageCalendarComponents() async throws {
+    @Test
+    func `Usage: Calendar components`() async throws {
         // Lines 132-135 in README
         let _ = 1.weekday
         let _ = 1.quarter
@@ -179,8 +179,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date Boundaries Examples
 
-    @Test("Usage: Day boundaries")
-    func usageDayBoundaries() async throws {
+    @Test
+    func `Usage: Day boundaries`() async throws {
         // Lines 141-145 in README
         let date = Date()
 
@@ -192,8 +192,8 @@ struct ReadmeVerificationTests {
         #expect(endOfDay > startOfDay)
     }
 
-    @Test("Usage: Week boundaries")
-    func usageWeekBoundaries() async throws {
+    @Test
+    func `Usage: Week boundaries`() async throws {
         // Lines 147-149 in README
         let date = Date()
         let startOfWeek = date.startOfWeek
@@ -203,8 +203,8 @@ struct ReadmeVerificationTests {
         #expect(endOfWeek >= date)
     }
 
-    @Test("Usage: Month boundaries")
-    func usageMonthBoundaries() async throws {
+    @Test
+    func `Usage: Month boundaries`() async throws {
         // Lines 151-155 in README
         let date = Date()
         let startOfMonth = date.startOfMonth
@@ -218,8 +218,8 @@ struct ReadmeVerificationTests {
         #expect(lastDay.day > 0)
     }
 
-    @Test("Usage: Year boundaries")
-    func usageYearBoundaries() async throws {
+    @Test
+    func `Usage: Year boundaries`() async throws {
         // Lines 157-159 in README
         let date = Date()
         let startOfYear = date.startOfYear
@@ -233,8 +233,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date State Checks Examples
 
-    @Test("Usage: Date state relative to today")
-    func usageDateStateRelativeToday() async throws {
+    @Test
+    func `Usage: Date state relative to today`() async throws {
         // Lines 165-171 in README
         let date = Date()
 
@@ -245,8 +245,8 @@ struct ReadmeVerificationTests {
         #expect(date.isToday == true)
     }
 
-    @Test("Usage: Date state relative to current periods")
-    func usageDateStateRelativeCurrentPeriods() async throws {
+    @Test
+    func `Usage: Date state relative to current periods`() async throws {
         // Lines 173-178 in README
         let date = Date()
         _ = date.isThisWeek  // true if date is in current week
@@ -260,8 +260,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date Comparisons Examples
 
-    @Test("Usage: Date comparisons")
-    func usageDateComparisons() async throws {
+    @Test
+    func `Usage: Date comparisons`() async throws {
         // Lines 183-190 in README
         let date1 = Date()
         let date2 = Date() + 1.day
@@ -273,8 +273,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Weekend & Business Days Examples
 
-    @Test("Usage: Weekend checks")
-    func usageWeekendChecks() async throws {
+    @Test
+    func `Usage: Weekend checks`() async throws {
         // Lines 195-204 in README
         let date = Date()
 
@@ -290,8 +290,8 @@ struct ReadmeVerificationTests {
         #expect(!nextWeekday.isWeekend)
     }
 
-    @Test("Usage: Business day calculations")
-    func usageBusinessDayCalculations() async throws {
+    @Test
+    func `Usage: Business day calculations`() async throws {
         // Lines 206-208 in README
         let date = Date()
         let fiveBusinessDaysLater = date.addingBusinessDays(5)
@@ -303,8 +303,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Weekday Navigation Examples
 
-    @Test("Usage: Weekday navigation")
-    func usageWeekdayNavigation() async throws {
+    @Test
+    func `Usage: Weekday navigation`() async throws {
         // Lines 213-218 in README
         let date = Date()
 
@@ -317,8 +317,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Time Calculations Examples
 
-    @Test("Usage: Time calculations")
-    func usageTimeCalculations() async throws {
+    @Test
+    func `Usage: Time calculations`() async throws {
         // Lines 223-230 in README
         let startDate = Date()
         let endDate = Date() + 10.days
@@ -328,8 +328,8 @@ struct ReadmeVerificationTests {
         #expect(daysBetween == 10)
     }
 
-    @Test("Usage: Age calculations")
-    func usageAgeCalculations() async throws {
+    @Test
+    func `Usage: Age calculations`() async throws {
         // Lines 229-230 in README
         let birthDate = Date(year: 2000, month: 1, day: 1)!
         let age = birthDate.age()  // Age in years from birth date to now
@@ -341,8 +341,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - TimeInterval Extensions Examples
 
-    @Test("Usage: TimeInterval constants")
-    func usageTimeIntervalConstants() async throws {
+    @Test
+    func `Usage: Time Interval constants`() async throws {
         // Lines 235-240 in README
         #expect(TimeInterval.minute == 60)
         #expect(TimeInterval.hour == 3600)
@@ -350,8 +350,8 @@ struct ReadmeVerificationTests {
         #expect(TimeInterval.week == 604800)
     }
 
-    @Test("Usage: TimeInterval conversions")
-    func usageTimeIntervalConversions() async throws {
+    @Test
+    func `Usage: Time Interval conversions`() async throws {
         // Lines 242-244 in README
         let twoHours: TimeInterval = 2.hours  // 7200
         let thirtyMinutes: TimeInterval = 30.minutes  // 1800
@@ -360,8 +360,8 @@ struct ReadmeVerificationTests {
         #expect(thirtyMinutes == 1800)
     }
 
-    @Test("Usage: TimeInterval as conversions")
-    func usageTimeIntervalAsConversions() async throws {
+    @Test
+    func `Usage: Time Interval as conversions`() async throws {
         // Lines 246-250 in README
         let interval: TimeInterval = 7200
         #expect(interval.asHours == 2.0)
@@ -369,8 +369,8 @@ struct ReadmeVerificationTests {
         #expect(interval.asDays < 1.0)
     }
 
-    @Test("Usage: Formatted duration")
-    func usageFormattedDuration() async throws {
+    @Test
+    func `Usage: Formatted duration`() async throws {
         // Lines 252-256 in README
         #expect((30.0).formattedDuration == "30s")
         #expect((90.0).formattedDuration == "2m")
@@ -380,8 +380,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Relative Date Formatting Examples
 
-    @Test("Usage: Relative date formatting past")
-    func usageRelativeDateFormattingPast() async throws {
+    @Test
+    func `Usage: Relative date formatting past`() async throws {
         // Lines 261-267 in README
         let now = Date()
 
@@ -393,8 +393,8 @@ struct ReadmeVerificationTests {
         #expect(relativeFormatted.contains("hour") || relativeFormatted.contains("ago"))
     }
 
-    @Test("Usage: Relative date formatting future")
-    func usageRelativeDateFormattingFuture() async throws {
+    @Test
+    func `Usage: Relative date formatting future`() async throws {
         // Lines 269-272 in README
         let now = Date()
         let futureDate = now + 3.days
@@ -405,8 +405,8 @@ struct ReadmeVerificationTests {
         #expect(relativeFormatted.contains("day") || relativeFormatted.contains("in"))
     }
 
-    @Test("Usage: Relative date formatting special cases")
-    func usageRelativeDateFormattingSpecialCases() async throws {
+    @Test
+    func `Usage: Relative date formatting special cases`() async throws {
         // Lines 274-283 in README
         let now = Date()
 
@@ -427,8 +427,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date Component Access Examples
 
-    @Test("Usage: Basic date components")
-    func usageBasicDateComponents() async throws {
+    @Test
+    func `Usage: Basic date components`() async throws {
         // Lines 288-297 in README
         let date = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30)!
 
@@ -440,8 +440,8 @@ struct ReadmeVerificationTests {
         #expect(date.second == 0)
     }
 
-    @Test("Usage: Advanced date components")
-    func usageAdvancedDateComponents() async throws {
+    @Test
+    func `Usage: Advanced date components`() async throws {
         // Lines 299-304 in README
         let date = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30)!
 
@@ -455,8 +455,8 @@ struct ReadmeVerificationTests {
         #expect(date.quarter >= 1 && date.quarter <= 4)
     }
 
-    @Test("Usage: Calendar and timezone info")
-    func usageCalendarAndTimezoneInfo() async throws {
+    @Test
+    func `Usage: Calendar and timezone info`() async throws {
         // Lines 306-308 in README
         let date = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30)!
 
@@ -468,8 +468,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - DateComponents Arithmetic Examples
 
-    @Test("Usage: DateComponents combining")
-    func usageDateComponentsCombining() async throws {
+    @Test
+    func `Usage: Date Components combining`() async throws {
         // Lines 313-316 in README
         let components = 1.day + 2.hours + 30.minutes
         let result = Date() + components
@@ -477,8 +477,8 @@ struct ReadmeVerificationTests {
         #expect(result > Date())
     }
 
-    @Test("Usage: DateComponents multiplication")
-    func usageDateComponentsMultiplication() async throws {
+    @Test
+    func `Usage: Date Components multiplication`() async throws {
         // Lines 318-320 in README
         let threeDays = 1.day * 3
         let sixMonths = 1.month * 6
@@ -491,8 +491,8 @@ struct ReadmeVerificationTests {
         #expect(result2 > date)
     }
 
-    @Test("Usage: DateComponents subtraction")
-    func usageDateComponentsSubtraction() async throws {
+    @Test
+    func `Usage: Date Components subtraction`() async throws {
         // Lines 322-323 in README
         let difference = 2.weeksOfYear - 3.days
 
@@ -504,16 +504,16 @@ struct ReadmeVerificationTests {
 
     // MARK: - DateComponents Validation Examples
 
-    @Test("Usage: DateComponents basic validation")
-    func usageDateComponentsBasicValidation() async throws {
+    @Test
+    func `Usage: Date Components basic validation`() async throws {
         // Lines 331-335 in README
         let components = DateComponents(year: 2025, month: 7, day: 26)
 
         #expect(components.isValid == true)
     }
 
-    @Test("Usage: DateComponents calendar validation")
-    func usageDateComponentsCalendarValidation() async throws {
+    @Test
+    func `Usage: Date Components calendar validation`() async throws {
         // Lines 337-339 in README
         let components = DateComponents(year: 2025, month: 7, day: 26)
         let calendar = Calendar.current
@@ -521,8 +521,8 @@ struct ReadmeVerificationTests {
         #expect(components.isValid(for: calendar) == true)
     }
 
-    @Test("Usage: DateComponents invalid examples")
-    func usageDateComponentsInvalidExamples() async throws {
+    @Test
+    func `Usage: Date Components invalid examples`() async throws {
         // Lines 341-343 in README
         let invalid = DateComponents(month: 13, day: 1)
 
@@ -531,8 +531,8 @@ struct ReadmeVerificationTests {
 
     // MARK: - Date Formatting Examples
 
-    @Test("Usage: DateFormatter extensions")
-    func usageDateFormatterExtensions() async throws {
+    @Test
+    func `Usage: Date Formatter extensions`() async throws {
         // Lines 348-351 in README
         let formatter = DateFormatter.dateFormat("yyyy-MM-dd")
         let dateString = formatter.string(from: Date())
@@ -541,8 +541,8 @@ struct ReadmeVerificationTests {
         #expect(dateString.contains("-"))
     }
 
-    @Test("Usage: FormatStyle extensions")
-    func usageFormatStyleExtensions() async throws {
+    @Test
+    func `Usage: Format Style extensions`() async throws {
         // Lines 353-354 in README
         let formatted = Date().formatted(.dateFormat("MMM d, yyyy"))
 

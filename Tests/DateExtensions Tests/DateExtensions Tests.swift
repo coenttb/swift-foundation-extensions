@@ -15,18 +15,18 @@ import Testing
 // MARK: - Main Test Suite
 
 @Suite(
-    "DateExtensions Tests",
+
     .dependency(\.calendar, Calendar.current)
 )
-struct DateExtensionsTests {
+struct Test {
 
     // MARK: - Date Initialization Tests
 
-    @Suite("Date Initialization")
-    struct DateInitializationTests {
+    @Suite
+    struct Test {
 
-        @Test("Date initializes with valid components")
-        func testDateInitializesWithValidComponents() async throws {
+        @Test
+        func `Date initializes with valid components`() async throws {
             let date = Date(year: 2025, month: 7, day: 26)
             #expect(date != nil)
 
@@ -40,8 +40,8 @@ struct DateExtensionsTests {
             }
         }
 
-        @Test("Date initializes with full components")
-        func testDateInitializesWithFullComponents() async throws {
+        @Test
+        func `Date initializes with full components`() async throws {
             let date = Date(year: 2025, month: 12, day: 25, hour: 15, minute: 30, second: 45)
             #expect(date != nil)
 
@@ -55,8 +55,8 @@ struct DateExtensionsTests {
             }
         }
 
-        @Test("Date returns nil for invalid components")
-        func testDateReturnsNilForInvalidComponents() async throws {
+        @Test
+        func `Date returns nil for invalid components`() async throws {
             #expect(Date(year: 2025, month: 13, day: 1) == nil)
             #expect(Date(year: 2025, month: 2, day: 30) == nil)
             #expect(Date(year: 2025, month: 4, day: 31) == nil)
@@ -67,11 +67,11 @@ struct DateExtensionsTests {
 
     // MARK: - DateComponents Integer Extensions Tests
 
-    @Suite("DateComponents Integer Extensions")
-    struct DateComponentsIntegerExtensionsTests {
+    @Suite
+    struct Test {
 
-        @Test("Integer day extensions work correctly")
-        func testIntegerDayExtensionsWorkCorrectly() async throws {
+        @Test
+        func `Integer day extensions work correctly`() async throws {
             let oneDay = 1.day
             let fiveDays = 5.days
 
@@ -79,8 +79,8 @@ struct DateExtensionsTests {
             #expect(fiveDays.day == 5)
         }
 
-        @Test("Integer month extensions work correctly")
-        func testIntegerMonthExtensionsWorkCorrectly() async throws {
+        @Test
+        func `Integer month extensions work correctly`() async throws {
             let oneMonth = 1.month
             let sixMonths = 6.months
 
@@ -88,8 +88,8 @@ struct DateExtensionsTests {
             #expect(sixMonths.month == 6)
         }
 
-        @Test("Integer year extensions work correctly")
-        func testIntegerYearExtensionsWorkCorrectly() async throws {
+        @Test
+        func `Integer year extensions work correctly`() async throws {
             let oneYear = 1.year
             let threeYears = 3.years
 
@@ -97,8 +97,8 @@ struct DateExtensionsTests {
             #expect(threeYears.year == 3)
         }
 
-        @Test("Integer time extensions work correctly")
-        func testIntegerTimeExtensionsWorkCorrectly() async throws {
+        @Test
+        func `Integer time extensions work correctly`() async throws {
             let oneHour = 1.hour
             let thirtyMinutes = 30.minutes
             let fortyFiveSeconds = 45.seconds
@@ -108,8 +108,8 @@ struct DateExtensionsTests {
             #expect(fortyFiveSeconds.second == 45)
         }
 
-        @Test("All integer extensions maintain correct values")
-        func testAllIntegerExtensionsMaintainCorrectValues() async throws {
+        @Test
+        func `All integer extensions maintain correct values`() async throws {
             #expect(1.era.era == 1)
             #expect(7.weekday.weekday == 7)
             #expect(2.weekdayOrdinal.weekdayOrdinal == 2)
@@ -123,11 +123,11 @@ struct DateExtensionsTests {
 
     // MARK: - Date Arithmetic Tests
 
-    @Suite("Date Arithmetic")
-    struct DateArithmeticTests {
+    @Suite
+    struct Test {
 
-        @Test("Date addition works correctly")
-        func testDateAdditionWorksCorrectly() async throws {
+        @Test
+        func `Date addition works correctly`() async throws {
             let baseDate = Date(year: 2025, month: 1, day: 1)!
 
             let nextDay = baseDate + 1.day
@@ -140,8 +140,8 @@ struct DateExtensionsTests {
             #expect(nextYear.year == 2026)
         }
 
-        @Test("Date subtraction works correctly")
-        func testDateSubtractionWorksCorrectly() async throws {
+        @Test
+        func `Date subtraction works correctly`() async throws {
             let baseDate = Date(year: 2025, month: 2, day: 15)!
 
             let previousDay = baseDate - 1.day
@@ -154,8 +154,8 @@ struct DateExtensionsTests {
             #expect(previousYear.year == 2024)
         }
 
-        @Test("Complex date arithmetic works correctly")
-        func testComplexDateArithmeticWorksCorrectly() async throws {
+        @Test
+        func `Complex date arithmetic works correctly`() async throws {
             let baseDate = Date(year: 2025, month: 1, day: 1, hour: 12)!
 
             let complexDate = baseDate + 1.year + 6.months + 2.hours + 30.minutes
@@ -168,11 +168,11 @@ struct DateExtensionsTests {
 
     // MARK: - Date Comparison Tests
 
-    @Suite("Date Comparison")
-    struct DateComparisonTests {
+    @Suite
+    struct Test {
 
-        @Test("Date comparison methods work correctly")
-        func testDateComparisonMethodsWorkCorrectly() async throws {
+        @Test
+        func `Date comparison methods work correctly`() async throws {
             let earlierDate = Date(year: 2025, month: 1, day: 1)!
             let laterDate = Date(year: 2025, month: 1, day: 2)!
 
@@ -183,8 +183,8 @@ struct DateExtensionsTests {
             #expect(!laterDate.isBefore(earlierDate))
         }
 
-        @Test("Same day comparison works correctly")
-        func testSameDayComparisonWorksCorrectly() async throws {
+        @Test
+        func `Same day comparison works correctly`() async throws {
             let morning = Date(year: 2025, month: 7, day: 26, hour: 9)!
             let evening = Date(year: 2025, month: 7, day: 26, hour: 21)!
             let nextDay = Date(year: 2025, month: 7, day: 27, hour: 9)!
@@ -196,11 +196,11 @@ struct DateExtensionsTests {
 
     // MARK: - Date Component Access Tests
 
-    @Suite("Date Component Access")
-    struct DateComponentAccessTests {
+    @Suite
+    struct Test {
 
-        @Test("Date component properties return correct values")
-        func testDateComponentPropertiesReturnCorrectValues() async throws {
+        @Test
+        func `Date component properties return correct values`() async throws {
             let testDate = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30, second: 45)!
 
             #expect(testDate.year == 2025)
@@ -211,15 +211,15 @@ struct DateExtensionsTests {
             #expect(testDate.second == 45)
         }
 
-        @Test("Weekday component works correctly")
-        func testWeekdayComponentWorksCorrectly() async throws {
+        @Test
+        func `Weekday component works correctly`() async throws {
             // July 26, 2025 is a Saturday
             let saturday = Date(year: 2025, month: 7, day: 26)!
             #expect(saturday.weekday == 7)  // Saturday = 7 in Calendar
         }
 
-        @Test("Week and year components work correctly")
-        func testWeekAndYearComponentsWorkCorrectly() async throws {
+        @Test
+        func `Week and year components work correctly`() async throws {
             let testDate = Date(year: 2025, month: 7, day: 26)!
 
             #expect(testDate.weekOfYear > 0)
@@ -230,11 +230,11 @@ struct DateExtensionsTests {
 
     // MARK: - Weekend Tests
 
-    @Suite("Weekend Functionality")
-    struct WeekendTests {
+    @Suite
+    struct Test {
 
-        @Test("Weekend detection works correctly")
-        func testWeekendDetectionWorksCorrectly() async throws {
+        @Test
+        func `Weekend detection works correctly`() async throws {
             // July 26, 2025 is a Saturday
             let saturday = Date(year: 2025, month: 7, day: 26)!
             let sunday = Date(year: 2025, month: 7, day: 27)!
@@ -245,8 +245,8 @@ struct DateExtensionsTests {
             #expect(!monday.isWeekend)
         }
 
-        @Test("Next weekday calculation works correctly")
-        func testNextWeekdayCalculationWorksCorrectly() async throws {
+        @Test
+        func `Next weekday calculation works correctly`() async throws {
             let friday = Date(year: 2025, month: 7, day: 25)!
             let nextWeekday = friday.nextWeekday
 
@@ -255,8 +255,8 @@ struct DateExtensionsTests {
             #expect(!nextWeekday.isWeekend)
         }
 
-        @Test("Weekend adjustment methods work correctly")
-        func testWeekendAdjustmentMethodsWorkCorrectly() async throws {
+        @Test
+        func `Weekend adjustment methods work correctly`() async throws {
             let saturday = Date(year: 2025, month: 7, day: 26)!
 
             let nextWorkday = saturday.ifWeekendThenNextWorkday()
@@ -271,11 +271,11 @@ struct DateExtensionsTests {
 
     // MARK: - Weekday Navigation Tests
 
-    @Suite("Weekday Navigation")
-    struct WeekdayNavigationTests {
+    @Suite
+    struct Test {
 
-        @Test("Next weekday navigation works correctly")
-        func testNextWeekdayNavigationWorksCorrectly() async throws {
+        @Test
+        func `Next weekday navigation works correctly`() async throws {
             let monday = Date(year: 2025, month: 7, day: 28)!  // Monday
 
             let nextWednesday = monday.next(4)  // Wednesday = 4
@@ -283,8 +283,8 @@ struct DateExtensionsTests {
             #expect(nextWednesday > monday)
         }
 
-        @Test("Previous weekday navigation works correctly")
-        func testPreviousWeekdayNavigationWorksCorrectly() async throws {
+        @Test
+        func `Previous weekday navigation works correctly`() async throws {
             let friday = Date(year: 2025, month: 7, day: 25)!  // Friday
 
             let previousWednesday = friday.previous(4)  // Wednesday = 4
@@ -295,11 +295,11 @@ struct DateExtensionsTests {
 
     // MARK: - Date Calculation Tests
 
-    @Suite("Date Calculations")
-    struct DateCalculationTests {
+    @Suite
+    struct Test {
 
-        @Test("Days between calculation works correctly")
-        func testDaysBetweenCalculationWorksCorrectly() async throws {
+        @Test
+        func `Days between calculation works correctly`() async throws {
             let startDate = Date(year: 2025, month: 1, day: 1)!
             let endDate = Date(year: 2025, month: 1, day: 11)!
 
@@ -310,8 +310,8 @@ struct DateExtensionsTests {
             #expect(reverseDays == -10)
         }
 
-        @Test("Business days calculation works correctly")
-        func testBusinessDaysCalculationWorksCorrectly() async throws {
+        @Test
+        func `Business days calculation works correctly`() async throws {
             let monday = Date(year: 2025, month: 7, day: 28)!  // Monday
 
             let fiveBusinessDaysLater = monday.addingBusinessDays(5)
@@ -321,8 +321,8 @@ struct DateExtensionsTests {
             #expect(fiveBusinessDaysEarlier.weekday == 2)  // Should be previous Monday
         }
 
-        @Test("Business days skip weekends correctly")
-        func testBusinessDaysSkipWeekendsCorrectly() async throws {
+        @Test
+        func `Business days skip weekends correctly`() async throws {
             let friday = Date(year: 2025, month: 7, day: 25)!  // Friday
 
             let oneBusinessDayLater = friday.addingBusinessDays(1)
@@ -333,11 +333,11 @@ struct DateExtensionsTests {
 
     // MARK: - Month Boundary Tests
 
-    @Suite("Month Boundaries")
-    struct MonthBoundaryTests {
+    @Suite
+    struct Test {
 
-        @Test("First day of month calculation works correctly")
-        func testFirstDayOfMonthCalculationWorksCorrectly() async throws {
+        @Test
+        func `First day of month calculation works correctly`() async throws {
             let midMonth = Date(year: 2025, month: 7, day: 15)!
             let firstDay = midMonth.firstDayOfMonth
 
@@ -346,8 +346,8 @@ struct DateExtensionsTests {
             #expect(firstDay.day == 1)
         }
 
-        @Test("Last day of month calculation works correctly")
-        func testLastDayOfMonthCalculationWorksCorrectly() async throws {
+        @Test
+        func `Last day of month calculation works correctly`() async throws {
             let midMonth = Date(year: 2025, month: 7, day: 15)!
             let lastDay = midMonth.lastDayOfMonth
 
@@ -356,8 +356,8 @@ struct DateExtensionsTests {
             #expect(lastDay.day == 31)  // July has 31 days
         }
 
-        @Test("February last day calculation handles leap years")
-        func testFebruaryLastDayCalculationHandlesLeapYears() async throws {
+        @Test
+        func `February last day calculation handles leap years`() async throws {
             let feb2024 = Date(year: 2024, month: 2, day: 15)!  // 2024 is leap year
             let lastDayLeap = feb2024.lastDayOfMonth
             #expect(lastDayLeap.day == 29)
@@ -370,11 +370,11 @@ struct DateExtensionsTests {
 
     // MARK: - Age Calculation Tests
 
-    @Suite("Age Calculation")
-    struct AgeCalculationTests {
+    @Suite
+    struct Test {
 
-        @Test("Age calculation works correctly")
-        func testAgeCalculationWorksCorrectly() async throws {
+        @Test
+        func `Age calculation works correctly`() async throws {
             let birthDate = Date(year: 2000, month: 1, day: 1)!
             let referenceDate = Date(year: 2025, month: 1, day: 1)!
 
@@ -382,8 +382,8 @@ struct DateExtensionsTests {
             #expect(age == 25)
         }
 
-        @Test("Age calculation handles birthday not yet reached")
-        func testAgeCalculationHandlesBirthdayNotYetReached() async throws {
+        @Test
+        func `Age calculation handles birthday not yet reached`() async throws {
             let birthDate = Date(year: 2000, month: 12, day: 31)!
             let referenceDate = Date(year: 2025, month: 1, day: 1)!
 
@@ -391,8 +391,8 @@ struct DateExtensionsTests {
             #expect(age == 24)  // Birthday hasn't occurred yet in reference year
         }
 
-        @Test("Age calculation with current date")
-        func testAgeCalculationWithCurrentDate() async throws {
+        @Test
+        func `Age calculation with current date`() async throws {
             let birthDate = Date(year: 2000, month: 1, day: 1)!
             let age = birthDate.age()  // Uses current date
 
@@ -402,11 +402,11 @@ struct DateExtensionsTests {
 
     // MARK: - DateComponents Arithmetic Tests
 
-    @Suite("DateComponents Arithmetic")
-    struct DateComponentsArithmeticTests {
+    @Suite
+    struct Test {
 
-        @Test("DateComponents addition works correctly")
-        func testDateComponentsAdditionWorksCorrectly() async throws {
+        @Test
+        func `Date Components addition works correctly`() async throws {
             let oneDay = 1.day
             let oneHour = 1.hour
             let combined = oneDay + oneHour
@@ -415,8 +415,8 @@ struct DateExtensionsTests {
             #expect(combined.hour == 1)
         }
 
-        @Test("DateComponents subtraction works correctly")
-        func testDateComponentsSubtractionWorksCorrectly() async throws {
+        @Test
+        func `Date Components subtraction works correctly`() async throws {
             let twoWeeks = 2.weeks
             let oneWeek = 1.week
             let difference = twoWeeks - oneWeek
@@ -424,8 +424,8 @@ struct DateExtensionsTests {
             #expect(difference.weekOfYear == 1)
         }
 
-        @Test("DateComponents multiplication works correctly")
-        func testDateComponentsMultiplicationWorksCorrectly() async throws {
+        @Test
+        func `Date Components multiplication works correctly`() async throws {
             let oneDay = 1.day
             let threeDays = oneDay * 3
 
@@ -435,16 +435,16 @@ struct DateExtensionsTests {
             #expect(alsoThreeDays.day == 3)
         }
 
-        @Test("DateComponents negation works correctly")
-        func testDateComponentsNegationWorksCorrectly() async throws {
+        @Test
+        func `Date Components negation works correctly`() async throws {
             let oneMonth = 1.month
             let negated = oneMonth.negated()
 
             #expect(negated.month == -1)
         }
 
-        @Test("DateComponents zero constant works correctly")
-        func testDateComponentsZeroConstantWorksCorrectly() async throws {
+        @Test
+        func `Date Components zero constant works correctly`() async throws {
             let zero = DateComponents.zero
             let baseDate = Date()
             let resultDate = baseDate + zero
@@ -455,11 +455,11 @@ struct DateExtensionsTests {
 
     // MARK: - DateFormatter Tests
 
-    @Suite("DateFormatter Extensions")
-    struct DateFormatterTests {
+    @Suite
+    struct Test {
 
-        @Test("DateFormatter dateFormat method works correctly")
-        func testDateFormatterDateFormatMethodWorksCorrectly() async throws {
+        @Test
+        func `Date Formatter date Format method works correctly`() async throws {
             let formatter = DateFormatter.dateFormat("yyyy-MM-dd")
             let testDate = Date(year: 2025, month: 7, day: 26)!
 
@@ -467,8 +467,8 @@ struct DateExtensionsTests {
             #expect(formatted == "2025-07-26")
         }
 
-        @Test("DateFormatter handles different formats")
-        func testDateFormatterHandlesDifferentFormats() async throws {
+        @Test
+        func `Date Formatter handles different formats`() async throws {
             let testDate = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30)!
 
             let dateFormatter = DateFormatter.dateFormat("MM/dd/yyyy")
@@ -482,11 +482,11 @@ struct DateExtensionsTests {
     // MARK: - StringDateFormat Tests
 
     //    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    @Suite("StringDateFormat Tests")
-    struct StringDateFormatTests {
+    @Suite
+    struct Test {
 
-        @Test("StringDateFormat works correctly")
-        func testStringDateFormatWorksCorrectly() async throws {
+        @Test
+        func `String Date Format works correctly`() async throws {
             let format = StringDateFormat.dateFormat("yyyy-MM-dd")
             let testDate = Date(year: 2025, month: 7, day: 26)!
 
@@ -494,8 +494,8 @@ struct DateExtensionsTests {
             #expect(formatted == "2025-07-26")
         }
 
-        @Test("StringDateFormat handles complex patterns")
-        func testStringDateFormatHandlesComplexPatterns() async throws {
+        @Test
+        func `String Date Format handles complex patterns`() async throws {
             let format = StringDateFormat.dateFormat("EEEE, MMMM d, yyyy 'at' h:mm a")
             let testDate = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30)!
 
@@ -508,11 +508,11 @@ struct DateExtensionsTests {
 
     // MARK: - Edge Cases Tests
 
-    @Suite("Edge Cases")
-    struct EdgeCasesTests {
+    @Suite
+    struct Test {
 
-        @Test("Leap year handling works correctly")
-        func testLeapYearHandlingWorksCorrectly() async throws {
+        @Test
+        func `Leap year handling works correctly`() async throws {
             let leapDay2024 = Date(year: 2024, month: 2, day: 29)
             #expect(leapDay2024 != nil)  // 2024 is leap year
 
@@ -520,8 +520,8 @@ struct DateExtensionsTests {
             #expect(invalidLeapDay2025 == nil)  // 2025 is not leap year
         }
 
-        @Test("Month boundary calculations handle edge cases")
-        func testMonthBoundaryCalculationsHandleEdgeCases() async throws {
+        @Test
+        func `Month boundary calculations handle edge cases`() async throws {
             let jan31 = Date(year: 2025, month: 1, day: 31)!
             let nextMonth = jan31 + 1.month
 
@@ -530,8 +530,8 @@ struct DateExtensionsTests {
             #expect(nextMonth.day <= 29)
         }
 
-        @Test("Large date arithmetic works correctly")
-        func testLargeDateArithmeticWorksCorrectly() async throws {
+        @Test
+        func `Large date arithmetic works correctly`() async throws {
             let baseDate = Date(year: 2025, month: 1, day: 1)!
             let farFuture = baseDate + 100.years
 
@@ -541,11 +541,11 @@ struct DateExtensionsTests {
 
     // MARK: - Safe Arithmetic Tests
 
-    @Suite("Safe Arithmetic Methods")
-    struct SafeArithmeticTests {
+    @Suite
+    struct Test {
 
-        @Test("Safe adding method works correctly")
-        func testSafeAddingMethodWorksCorrectly() async throws {
+        @Test
+        func `Safe adding method works correctly`() async throws {
             let baseDate = Date(year: 2025, month: 1, day: 1)!
 
             let result = baseDate.adding(1.day)
@@ -560,8 +560,8 @@ struct DateExtensionsTests {
             #expect(complexResult?.day == 3)
         }
 
-        @Test("Safe subtracting method works correctly")
-        func testSafeSubtractingMethodWorksCorrectly() async throws {
+        @Test
+        func `Safe subtracting method works correctly`() async throws {
             let baseDate = Date(year: 2025, month: 2, day: 15)!
 
             let result = baseDate.subtracting(1.day)
@@ -578,11 +578,11 @@ struct DateExtensionsTests {
 
     // MARK: - Date Boundaries Tests
 
-    @Suite("Date Boundaries")
-    struct DateBoundariesTests {
+    @Suite
+    struct Test {
 
-        @Test("Start and end of day work correctly")
-        func testStartAndEndOfDayWorkCorrectly() async throws {
+        @Test
+        func `Start and end of day work correctly`() async throws {
             let midDay = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30, second: 45)!
 
             let startOfDay = midDay.startOfDay
@@ -602,8 +602,8 @@ struct DateExtensionsTests {
             #expect(endOfDay.second == 59)
         }
 
-        @Test("Start and end of week work correctly")
-        func testStartAndEndOfWeekWorkCorrectly() async throws {
+        @Test
+        func `Start and end of week work correctly`() async throws {
             let midWeek = Date(year: 2025, month: 7, day: 30)!  // Wednesday
 
             let startOfWeek = midWeek.startOfWeek
@@ -614,8 +614,8 @@ struct DateExtensionsTests {
             #expect(startOfWeek < endOfWeek)
         }
 
-        @Test("Start and end of month work correctly")
-        func testStartAndEndOfMonthWorkCorrectly() async throws {
+        @Test
+        func `Start and end of month work correctly`() async throws {
             let midMonth = Date(year: 2025, month: 7, day: 15)!
 
             let startOfMonth = midMonth.startOfMonth
@@ -635,8 +635,8 @@ struct DateExtensionsTests {
             #expect(endOfMonth.second == 59)
         }
 
-        @Test("Start and end of year work correctly")
-        func testStartAndEndOfYearWorkCorrectly() async throws {
+        @Test
+        func `Start and end of year work correctly`() async throws {
             let midYear = Date(year: 2025, month: 6, day: 15)!
 
             let startOfYear = midYear.startOfYear
@@ -659,11 +659,11 @@ struct DateExtensionsTests {
 
     // MARK: - Date State Tests
 
-    @Suite("Date State Checks")
-    struct DateStateTests {
+    @Suite
+    struct Test {
 
-        @Test("Today state check works correctly")
-        func testTodayStateCheckWorksCorrectly() async throws {
+        @Test
+        func `Today state check works correctly`() async throws {
             let now = Date()
             let todayMorning = now.startOfDay
             let todayEvening = now.endOfDay
@@ -679,8 +679,8 @@ struct DateExtensionsTests {
             #expect(!tomorrow.isToday)
         }
 
-        @Test("Tomorrow and yesterday state checks work correctly")
-        func testTomorrowAndYesterdayStateChecksWorkCorrectly() async throws {
+        @Test
+        func `Tomorrow and yesterday state checks work correctly`() async throws {
             let now = Date()
             let tomorrow = now + 1.day
             let yesterday = now - 1.day
@@ -694,8 +694,8 @@ struct DateExtensionsTests {
             #expect(!tomorrow.isYesterday)
         }
 
-        @Test("This week state check works correctly")
-        func testThisWeekStateCheckWorksCorrectly() async throws {
+        @Test
+        func `This week state check works correctly`() async throws {
             let now = Date()
             let thisWeekStart = now.startOfWeek
             let thisWeekEnd = now.endOfWeek
@@ -708,8 +708,8 @@ struct DateExtensionsTests {
             #expect(!nextWeek.isThisWeek)
         }
 
-        @Test("This month and year state checks work correctly")
-        func testThisMonthAndYearStateChecksWorkCorrectly() async throws {
+        @Test
+        func `This month and year state checks work correctly`() async throws {
             let now = Date()
 
             #expect(now.isThisMonth)
@@ -726,11 +726,11 @@ struct DateExtensionsTests {
 
     // MARK: - Performance Tests
 
-    @Suite("Performance")
-    struct PerformanceTests {
+    @Suite
+    struct Test {
 
-        @Test("Date component access is efficient")
-        func testDateComponentAccessIsEfficient() async throws {
+        @Test
+        func `Date component access is efficient`() async throws {
             let testDate = Date()
 
             // This should not cause any performance issues
@@ -743,8 +743,8 @@ struct DateExtensionsTests {
             #expect(true)  // If we get here, performance is acceptable
         }
 
-        @Test("Date arithmetic is efficient")
-        func testDateArithmeticIsEfficient() async throws {
+        @Test
+        func `Date arithmetic is efficient`() async throws {
             let baseDate = Date()
 
             // This should not cause any performance issues
@@ -758,19 +758,19 @@ struct DateExtensionsTests {
 
     // MARK: - Component Properties Tests
 
-    @Suite("Component Properties")
-    struct ComponentPropertiesTests {
+    @Suite
+    struct Test {
 
-        @Test("Calendar identifier property works correctly")
-        func testCalendarIdentifierPropertyWorksCorrectly() async throws {
+        @Test
+        func `Calendar identifier property works correctly`() async throws {
             let testDate = Date(year: 2025, month: 7, day: 26)!
             let identifier = testDate.calendarIdentifier
 
             #expect(identifier == Calendar.current.identifier)
         }
 
-        @Test("TimeZone property works correctly")
-        func testTimeZonePropertyWorksCorrectly() async throws {
+        @Test
+        func `Time Zone property works correctly`() async throws {
             let testDate = Date(year: 2025, month: 7, day: 26)!
             let timeZone = testDate.timeZone
 
@@ -780,11 +780,11 @@ struct DateExtensionsTests {
 
     // MARK: - DateComponents Validation Tests
 
-    @Suite("DateComponents Validation")
-    struct DateComponentsValidationTests {
+    @Suite
+    struct Test {
 
-        @Test("Valid DateComponents pass validation")
-        func testValidDateComponentsPassValidation() async throws {
+        @Test
+        func `Valid Date Components pass validation`() async throws {
             let validComponents = DateComponents(
                 year: 2025,
                 month: 7,
@@ -799,8 +799,8 @@ struct DateExtensionsTests {
             #expect(validComponents.isValid(for: calendar))
         }
 
-        @Test("Invalid DateComponents fail basic validation")
-        func testInvalidDateComponentsFailBasicValidation() async throws {
+        @Test
+        func `Invalid Date Components fail basic validation`() async throws {
             let invalidMonth = DateComponents(year: 2025, month: 13, day: 1)
             #expect(!invalidMonth.isValid)
 
@@ -823,8 +823,8 @@ struct DateExtensionsTests {
             #expect(!invalidQuarter.isValid)
         }
 
-        @Test("Calendar-specific validation works correctly")
-        func testCalendarSpecificValidationWorksCorrectly() async throws {
+        @Test
+        func `Calendar-specific validation works correctly`() async throws {
             let calendar = Calendar.current
 
             // Valid components should pass calendar validation
@@ -839,19 +839,19 @@ struct DateExtensionsTests {
 
     // MARK: - TimeInterval Extensions Tests
 
-    @Suite("TimeInterval Extensions")
-    struct TimeIntervalExtensionsTests {
+    @Suite
+    struct Test {
 
-        @Test("TimeInterval constants work correctly")
-        func testTimeIntervalConstantsWorkCorrectly() async throws {
+        @Test
+        func `Time Interval constants work correctly`() async throws {
             #expect(TimeInterval.minute == 60)
             #expect(TimeInterval.hour == 3600)
             #expect(TimeInterval.day == 86400)
             #expect(TimeInterval.week == 604800)
         }
 
-        @Test("TimeInterval conversion methods work correctly")
-        func testTimeIntervalConversionMethodsWorkCorrectly() async throws {
+        @Test
+        func `Time Interval conversion methods work correctly`() async throws {
             let value: TimeInterval = 2
 
             #expect(value.minutes == 120)
@@ -860,8 +860,8 @@ struct DateExtensionsTests {
             #expect(value.weeks == 1_209_600)
         }
 
-        @Test("TimeInterval as conversion properties work correctly")
-        func testTimeIntervalAsConversionPropertiesWorkCorrectly() async throws {
+        @Test
+        func `Time Interval as conversion properties work correctly`() async throws {
             let twoHours: TimeInterval = 7200
 
             #expect(twoHours.asMinutes == 120)
@@ -870,8 +870,8 @@ struct DateExtensionsTests {
             #expect(abs(twoHours.asWeeks - (7200 / 604800)) < 0.001)
         }
 
-        @Test("TimeInterval formatted duration works correctly")
-        func testTimeIntervalFormattedDurationWorksCorrectly() async throws {
+        @Test
+        func `Time Interval formatted duration works correctly`() async throws {
             #expect((30.0).formattedDuration == "30s")
             #expect((90.0).formattedDuration == "2m")
             #expect((3660.0).formattedDuration == "1.0h")
@@ -882,11 +882,11 @@ struct DateExtensionsTests {
 
     // MARK: - Relative Date Formatting Tests
 
-    @Suite("Relative Date Formatting")
-    struct RelativeDateFormattingTests {
+    @Suite
+    struct Test {
 
-        @Test("Time ago formatting works correctly")
-        func testTimeAgoFormattingWorksCorrectly() async throws {
+        @Test
+        func `Time ago formatting works correctly`() async throws {
             let now = Date()
 
             let fiveSecondsAgo = now - 5.seconds
@@ -905,8 +905,8 @@ struct DateExtensionsTests {
             #expect(threeDaysAgo.timeAgoSince(now) == "3 days ago")
         }
 
-        @Test("Time until formatting works correctly")
-        func testTimeUntilFormattingWorksCorrectly() async throws {
+        @Test
+        func `Time until formatting works correctly`() async throws {
             let now = Date()
 
             let inFiveSeconds = now + 5.seconds
@@ -925,8 +925,8 @@ struct DateExtensionsTests {
             #expect(inThreeDays.timeUntil(now) == "in 3 days")
         }
 
-        @Test("Relative formatted property works correctly")
-        func testRelativeFormattedPropertyWorksCorrectly() async throws {
+        @Test
+        func `Relative formatted property works correctly`() async throws {
             let now = Date()
 
             // Test yesterday/tomorrow - most reliable
@@ -951,8 +951,8 @@ struct DateExtensionsTests {
             #expect(oneHourAgo.relativeFormatted != oneHourFromNow.relativeFormatted)
         }
 
-        @Test("Singular vs plural formatting works correctly")
-        func testSingularVsPluralFormattingWorksCorrectly() async throws {
+        @Test
+        func `Singular vs plural formatting works correctly`() async throws {
             let now = Date()
 
             let oneMinuteAgo = now - 1.minute
