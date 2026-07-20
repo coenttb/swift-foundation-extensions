@@ -355,10 +355,10 @@ struct `Readme Verification` {
         let date = Date(year: 2025, month: 7, day: 26)!  // A Saturday
 
         // Navigate to specific weekdays (1=Sunday, 2=Monday, ..., 7=Saturday)
-        let nextMonday = date.next(2)  // Next Monday
-        let previousFriday = date.previous(6)  // Previous Friday
+        let nextMonday = try #require(date.next(2))  // Next Monday
+        let previousFriday = try #require(date.previous(6))  // Previous Friday
 
-        // These methods return Date (not optional)
+        // These methods return nil for weekday values outside 1...7
         #expect(nextMonday > date)
         #expect(previousFriday < date)
     }

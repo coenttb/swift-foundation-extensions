@@ -533,16 +533,25 @@ extension Date {
 }
 
 extension Date {
-    public func next(_ weekday: Int) -> Date {
+    /// Returns the next occurrence of the given weekday, or `nil` if `weekday`
+    /// is outside the valid range `1...7` (1 = Sunday in the Gregorian calendar).
+    public func next(_ weekday: Int) -> Date? {
+        guard (1...7).contains(weekday) else { return nil }
+
         @Dependency(\.calendar) var calendar
         return calendar.nextDate(
             after: self,
             matching: DateComponents(weekday: weekday),
             matchingPolicy: .nextTime
-        )!
+        )
     }
 
-    public func previous(_ weekday: Int) -> Date {
+    /// Returns the previous occurrence of the given weekday, or `nil` if
+    /// `weekday` is outside the valid range `1...7` (1 = Sunday in the
+    /// Gregorian calendar).
+    public func previous(_ weekday: Int) -> Date? {
+        guard (1...7).contains(weekday) else { return nil }
+
         @Dependency(\.calendar) var calendar
 
         // Start from the day before to ensure we get the previous occurrence

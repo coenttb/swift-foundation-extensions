@@ -308,8 +308,8 @@ struct `Readme Verification` {
         // Lines 213-218 in README
         let date = Date()
 
-        let nextMonday = date.next(2)  // Next Monday
-        let previousFriday = date.previous(6)  // Previous Friday
+        let nextMonday = try #require(date.next(2))  // Next Monday
+        let previousFriday = try #require(date.previous(6))  // Previous Friday
 
         #expect(nextMonday.weekday == 2)
         #expect(previousFriday.weekday == 6)

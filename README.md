@@ -214,8 +214,9 @@ let fiveBusinessDaysEarlier = date.addingBusinessDays(-5)
 let date = Date()
 
 // Navigate to specific weekdays (1=Sunday, 2=Monday, ..., 7=Saturday)
-let nextMonday = date.next(2)        // Next Monday
-let previousFriday = date.previous(6) // Previous Friday
+// Returns nil for weekday values outside 1...7
+let nextMonday = date.next(2)!        // Next Monday
+let previousFriday = date.previous(6)! // Previous Friday
 ```
 
 ### Time Calculations

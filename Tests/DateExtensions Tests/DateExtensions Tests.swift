@@ -278,7 +278,7 @@ struct Test {
         func `Next weekday navigation works correctly`() async throws {
             let monday = Date(year: 2025, month: 7, day: 28)!  // Monday
 
-            let nextWednesday = monday.next(4)  // Wednesday = 4
+            let nextWednesday = try #require(monday.next(4))  // Wednesday = 4
             #expect(nextWednesday.weekday == 4)
             #expect(nextWednesday > monday)
         }
@@ -287,7 +287,7 @@ struct Test {
         func `Previous weekday navigation works correctly`() async throws {
             let friday = Date(year: 2025, month: 7, day: 25)!  // Friday
 
-            let previousWednesday = friday.previous(4)  // Wednesday = 4
+            let previousWednesday = try #require(friday.previous(4))  // Wednesday = 4
             #expect(previousWednesday.weekday == 4)
             #expect(previousWednesday < friday)
         }
