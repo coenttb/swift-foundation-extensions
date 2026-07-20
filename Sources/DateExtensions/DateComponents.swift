@@ -195,6 +195,17 @@ extension DateComponents {
     /// - Parameter calendar: The calendar to use for validation
     /// - Returns: `true` if the components can create a valid date, `false` otherwise
     ///
+    /// Offset-style components (no `year` or `yearForWeekOfYear` anchor, e.g.
+    /// `2.months` used for date arithmetic) cannot be anchored to a concrete
+    /// date, so they are validated by range only (``isValid``).
+    ///
+    /// Anchored components are validated by materializing a date with
+    /// `Calendar.date(from:)` and verifying that the supplied fields round-trip
+    /// exactly, which catches calendar-specific issues like invalid leap days.
+    /// `quarter` and `nanosecond` are excluded from the round-trip check
+    /// (Foundation does not reliably round-trip them) and remain range-checked
+    /// only.
+    ///
     /// ## Example
     /// ```swift
     /// let leapDay = DateComponents(year: 2025, month: 2, day: 29)
@@ -204,10 +215,42 @@ extension DateComponents {
     public func isValid(for calendar: Calendar) -> Bool {
         guard self.isValid else { return false }
 
-        // Try to create a date with these components
-        let baseDate = Date()
-        guard calendar.date(byAdding: self, to: baseDate) != nil else {
-            return false
+        // Offset-style components have no positional anchor to validate
+        // against; range validation is the defined behavior.
+        guard self.year != nil || self.yearForWeekOfYear != nil else {
+            return true
+        }
+
+        var calendar = calendar
+        if let timeZone = self.timeZone {
+            calendar.timeZone = timeZone
+        }
+
+        guard let date = calendar.date(from: self) else { return false }
+
+        // Verify the supplied fields round-trip exactly. This catches cases
+        // like Feb 29 in a non-leap year (materialized as Mar 1) or Apr 31
+        // (materialized as May 1), mirroring Date.init?(year:month:day:...).
+        let suppliedFields: [(Calendar.Component, Int?)] = [
+            (.era, self.era),
+            (.year, self.year),
+            (.month, self.month),
+            (.day, self.day),
+            (.hour, self.hour),
+            (.minute, self.minute),
+            (.second, self.second),
+            (.weekday, self.weekday),
+            (.weekdayOrdinal, self.weekdayOrdinal),
+            (.weekOfMonth, self.weekOfMonth),
+            (.weekOfYear, self.weekOfYear),
+            (.yearForWeekOfYear, self.yearForWeekOfYear),
+        ]
+
+        for (component, supplied) in suppliedFields {
+            guard let supplied else { continue }
+            guard calendar.component(component, from: date) == supplied else {
+                return false
+            }
         }
 
         return true
