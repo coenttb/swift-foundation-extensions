@@ -23,7 +23,7 @@ struct Test {
     // MARK: - Date Initialization Tests
 
     @Suite
-    struct Test {
+    struct `Date Initialization` {
 
         @Test
         func `Date initializes with valid components`() async throws {
@@ -68,7 +68,7 @@ struct Test {
     // MARK: - DateComponents Integer Extensions Tests
 
     @Suite
-    struct Test {
+    struct `DateComponents Integer Extensions` {
 
         @Test
         func `Integer day extensions work correctly`() async throws {
@@ -124,7 +124,7 @@ struct Test {
     // MARK: - Date Arithmetic Tests
 
     @Suite
-    struct Test {
+    struct `Date Arithmetic` {
 
         @Test
         func `Date addition works correctly`() async throws {
@@ -169,7 +169,7 @@ struct Test {
     // MARK: - Date Comparison Tests
 
     @Suite
-    struct Test {
+    struct `Date Comparison` {
 
         @Test
         func `Date comparison methods work correctly`() async throws {
@@ -197,7 +197,7 @@ struct Test {
     // MARK: - Date Component Access Tests
 
     @Suite
-    struct Test {
+    struct `Date Component Access` {
 
         @Test
         func `Date component properties return correct values`() async throws {
@@ -231,7 +231,7 @@ struct Test {
     // MARK: - Weekend Tests
 
     @Suite
-    struct Test {
+    struct `Weekend Functionality` {
 
         @Test
         func `Weekend detection works correctly`() async throws {
@@ -272,7 +272,7 @@ struct Test {
     // MARK: - Weekday Navigation Tests
 
     @Suite
-    struct Test {
+    struct `Weekday Navigation` {
 
         @Test
         func `Next weekday navigation works correctly`() async throws {
@@ -296,7 +296,7 @@ struct Test {
     // MARK: - Date Calculation Tests
 
     @Suite
-    struct Test {
+    struct `Date Calculations` {
 
         @Test
         func `Days between calculation works correctly`() async throws {
@@ -334,7 +334,7 @@ struct Test {
     // MARK: - Month Boundary Tests
 
     @Suite
-    struct Test {
+    struct `Month Boundaries` {
 
         @Test
         func `First day of month calculation works correctly`() async throws {
@@ -371,7 +371,7 @@ struct Test {
     // MARK: - Age Calculation Tests
 
     @Suite
-    struct Test {
+    struct `Age Calculation` {
 
         @Test
         func `Age calculation works correctly`() async throws {
@@ -403,7 +403,7 @@ struct Test {
     // MARK: - DateComponents Arithmetic Tests
 
     @Suite
-    struct Test {
+    struct `DateComponents Arithmetic` {
 
         @Test
         func `Date Components addition works correctly`() async throws {
@@ -456,7 +456,7 @@ struct Test {
     // MARK: - DateFormatter Tests
 
     @Suite
-    struct Test {
+    struct `DateFormatter Extensions` {
 
         @Test
         func `Date Formatter date Format method works correctly`() async throws {
@@ -483,7 +483,7 @@ struct Test {
 
     //    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     @Suite
-    struct Test {
+    struct `String Date Format` {
 
         @Test
         func `String Date Format works correctly`() async throws {
@@ -509,7 +509,7 @@ struct Test {
     // MARK: - Edge Cases Tests
 
     @Suite
-    struct Test {
+    struct `Edge Cases` {
 
         @Test
         func `Leap year handling works correctly`() async throws {
@@ -542,7 +542,7 @@ struct Test {
     // MARK: - Safe Arithmetic Tests
 
     @Suite
-    struct Test {
+    struct `Safe Arithmetic Methods` {
 
         @Test
         func `Safe adding method works correctly`() async throws {
@@ -579,7 +579,7 @@ struct Test {
     // MARK: - Date Boundaries Tests
 
     @Suite
-    struct Test {
+    struct `Date Boundaries` {
 
         @Test
         func `Start and end of day work correctly`() async throws {
@@ -660,7 +660,7 @@ struct Test {
     // MARK: - Date State Tests
 
     @Suite
-    struct Test {
+    struct `Date State Checks` {
 
         @Test
         func `Today state check works correctly`() async throws {
@@ -727,7 +727,7 @@ struct Test {
     // MARK: - Performance Tests
 
     @Suite
-    struct Test {
+    struct `Performance` {
 
         @Test
         func `Date component access is efficient`() async throws {
@@ -759,7 +759,7 @@ struct Test {
     // MARK: - Component Properties Tests
 
     @Suite
-    struct Test {
+    struct `Component Properties` {
 
         @Test
         func `Calendar identifier property works correctly`() async throws {
@@ -781,7 +781,7 @@ struct Test {
     // MARK: - DateComponents Validation Tests
 
     @Suite
-    struct Test {
+    struct `DateComponents Validation` {
 
         @Test
         func `Valid Date Components pass validation`() async throws {
@@ -840,7 +840,7 @@ struct Test {
     // MARK: - TimeInterval Extensions Tests
 
     @Suite
-    struct Test {
+    struct `TimeInterval Extensions` {
 
         @Test
         func `Time Interval constants work correctly`() async throws {
@@ -883,7 +883,7 @@ struct Test {
     // MARK: - Relative Date Formatting Tests
 
     @Suite
-    struct Test {
+    struct `Relative Date Formatting` {
 
         @Test
         func `Time ago formatting works correctly`() async throws {

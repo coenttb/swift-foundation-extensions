@@ -11,8 +11,8 @@ import Foundation
 import FoundationExtensions
 import Testing
 
-@Suite( .dependency(\.calendar, Calendar.current)
-struct Test {
+@Suite(.dependency(\.calendar, Calendar.current))
+struct `Readme Verification` {
 
     // MARK: - Quick Start Examples
 

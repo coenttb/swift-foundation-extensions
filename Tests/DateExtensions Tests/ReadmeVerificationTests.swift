@@ -18,7 +18,7 @@ import Testing
 
     .dependency(\.calendar, Calendar.current)
 )
-struct Test {
+struct `Readme Verification` {
 
     // MARK: - Quick Start - DateExtensions
 

@@ -23,7 +23,7 @@ struct Test {
     // MARK: - Array Initialization Tests
 
     @Suite
-    struct Test {
+    struct `Safe Array` {
 
         @Test
         func `Safe subscript returns element for valid index`() async throws {
