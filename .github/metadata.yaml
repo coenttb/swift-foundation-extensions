@@ -1,0 +1,9 @@
+# .github/metadata.yaml
+description: "Extensions to Foundation types (dates, time intervals, collections) for Swift."
+topics:
+  - foundations
+  - extensions
+  - dates
+homepage: "https://swift-institute.org"
+readme:
+  family: E
