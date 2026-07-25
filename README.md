@@ -42,6 +42,17 @@ dependencies: [
 ]
 ```
 
+Add a product to your target:
+
+```swift
+.target(
+    name: "YourTarget",
+    dependencies: [
+        .product(name: "DateExtensions", package: "swift-foundation-extensions")
+    ]
+)
+```
+
 ## Quick Start
 
 ### DateExtensions
