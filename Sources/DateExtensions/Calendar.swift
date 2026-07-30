@@ -20,10 +20,14 @@ import Foundation
 // chain-default to `liveValue`, matching pointfree's un-overridden default
 // chain) rather than the test-only `Dependency.Key.Test`.
 
-extension Calendar: @retroactive Dependency.Key {
-    /// The live calendar dependency, sourced from the current, auto-updating
-    /// system calendar — mirrors pointfree's built-in `\.calendar` `liveValue`.
-    public static var liveValue: Calendar { .autoupdatingCurrent }
+extension Calendar {
+    /// Dependency key supplying the calendar used by `DateExtensions` date and
+    /// component operations — mirrors pointfree's built-in `\.calendar` `liveValue`.
+    public enum Key: Dependency.Key {
+        /// The live calendar dependency, sourced from the current, auto-updating
+        /// system calendar — mirrors pointfree's built-in `\.calendar` `liveValue`.
+        public static var liveValue: Calendar { .autoupdatingCurrent }
+    }
 }
 
 extension Dependency.Values {
@@ -40,7 +44,7 @@ extension Dependency.Values {
     /// }
     /// ```
     public var calendar: Calendar {
-        get { self[Calendar.self] }
-        set { self[Calendar.self] = newValue }
+        get { self[Calendar.Key.self] }
+        set { self[Calendar.Key.self] = newValue }
     }
 }
