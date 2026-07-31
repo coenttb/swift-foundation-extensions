@@ -30,7 +30,7 @@ struct Test {
             let date = Date(year: 2025, month: 7, day: 26)
             #expect(date != nil)
 
-            if let date = date {
+            if let date {
                 #expect(date.year == 2025)
                 #expect(date.month == 7)
                 #expect(date.day == 26)
@@ -45,7 +45,7 @@ struct Test {
             let date = Date(year: 2025, month: 12, day: 25, hour: 15, minute: 30, second: 45)
             #expect(date != nil)
 
-            if let date = date {
+            if let date {
                 #expect(date.year == 2025)
                 #expect(date.month == 12)
                 #expect(date.day == 25)
