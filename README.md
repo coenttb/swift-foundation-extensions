@@ -1,402 +1,162 @@
 # swift-foundation-extensions
 
-[![CI](https://github.com/coenttb/swift-foundation-extensions/workflows/CI/badge.svg)](https://github.com/coenttb/swift-foundation-extensions/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-foundations/swift-foundation-extensions/workflows/CI/badge.svg)](https://github.com/swift-foundations/swift-foundation-extensions/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
 *Swift extensions for Foundation types including dates, time intervals, and collections*
 
 ## Overview
 
-This package provides two main modules:
-- **DateExtensions**: Extensions for working with dates, date components, and time intervals
-- **FoundationExtensions**: Extensions for Foundation collections and types
+This package provides two modules:
 
-The extensions focus on safety, convenience, and integration with the Dependencies framework for testability.
+- **Foundation Date Extensions** — dates, date components, and time intervals
+- **Foundation Extensions** — Foundation collections and types
+
+**This package has no package dependencies.** Every calendar-dependent
+operation takes its `Calendar` as an explicit argument, which keeps the module
+pure and its results deterministic.
+
+If you would rather have the calendar come from the dependency environment —
+`date.isToday` instead of `date.isToday(in: calendar)` — add
+[swift-foundation-dependencies](https://github.com/swift-foundations/swift-foundation-dependencies),
+which supplies `@Dependency(\.calendar)` and the zero-argument spelling of this
+entire API.
+
+| You want | Import | Package dependencies |
+|----------|--------|----------------------|
+| Explicit calendar, deterministic | `Foundation_Date_Extensions` | none |
+| Ambient calendar via `\.calendar` | `Foundation_Dependencies` | `swift-dependencies` |
 
 ## Features
 
-### DateExtensions
+### Foundation Date Extensions
 
 - Safe date initialization with automatic validation
-- Date arithmetic with intuitive operators: `date + 1.day`, `date - 2.weeks`
+- Safe date arithmetic: `date.adding(1.day, in: calendar)`
 - Date boundaries: start/end of day, week, month, year
-- Date state checks: `isToday`, `isTomorrow`, `isWeekend`
+- Date state checks: `isToday(in:)`, `isWeekend(in:)`
 - Time interval constants and conversions
 - Relative date formatting: "2 hours ago", "in 3 days"
-- Business day calculations
-- Weekday navigation
+- Business day calculations and weekday navigation
 - Age calculations
 - DateComponents validation and arithmetic
 
-### FoundationExtensions
+### Foundation Extensions
 
 - Safe array subscripting with `array[safe: index]`
+- `Data.append(_:encoding:)`
 
 ## Installation
 
-Add this package to your Swift Package Manager dependencies:
-
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-foundation-extensions.git", from: "1.0.0")
+    .package(url: "https://github.com/swift-foundations/swift-foundation-extensions.git", branch: "main")
 ]
 ```
-
-Add a product to your target:
 
 ```swift
 .target(
     name: "YourTarget",
     dependencies: [
-        .product(name: "DateExtensions", package: "swift-foundation-extensions")
+        .product(name: "Foundation Date Extensions", package: "swift-foundation-extensions")
     ]
 )
 ```
 
 ## Quick Start
 
-### DateExtensions
+### Foundation Date Extensions
 
 ```swift
-import DateExtensions
+import Foundation_Date_Extensions
+
+let calendar = Calendar.current
 
 // Create dates safely
-let date = Date(year: 2025, month: 7, day: 26)!
-let invalidDate = Date(year: 2025, month: 2, day: 30) // Returns nil
+let date = Date(year: 2025, month: 7, day: 26, in: calendar)!
+let invalidDate = Date(year: 2025, month: 2, day: 30, in: calendar) // Returns nil
 
-// Date arithmetic
-let tomorrow = Date() + 1.day
-let nextWeek = Date() + 1.weekOfYear
-let complex = Date() + 1.year + 6.months + 2.days
+// Component access
+date.year(in: calendar)     // 2025
+date.month(in: calendar)    // 7
+date.weekday(in: calendar)  // 7 (Saturday)
 
-// Date boundaries
-let startOfDay = Date().startOfDay
-let endOfMonth = Date().endOfMonth
-let startOfYear = Date().startOfYear
+// Safe arithmetic
+let tomorrow = date.adding(1.day, in: calendar)          // Date?
+let lastWeek = date.subtracting(1.weekOfYear, in: calendar)
+
+// Boundaries
+date.startOfDay(in: calendar)
+date.endOfMonth(in: calendar)
+date.startOfYear(in: calendar)
 
 // State checks
-if Date().isToday {
+if date.isToday(in: calendar) {
     print("It's today!")
 }
 
-// Relative formatting
-let pastDate = Date() - 2.hours
-print(pastDate.relativeFormatted) // "2 hours ago"
+// Spans
+date.daysBetween(other, in: calendar)
+date.addingBusinessDays(3, in: calendar)
 
-let futureDate = Date() + 3.days
-print(futureDate.relativeFormatted) // "in 3 days"
+// Relative formatting
+date.relativeFormatted(in: calendar) // "2 hours ago"
 ```
 
-### FoundationExtensions
+Passing the calendar explicitly makes results reproducible regardless of the
+host's locale or time zone:
 
 ```swift
-import FoundationExtensions
+var gregorian = Calendar(identifier: .gregorian)
+gregorian.timeZone = TimeZone(identifier: "UTC")!
+
+let date = Date(year: 2025, month: 7, day: 26, in: gregorian)!
+date.weekday(in: gregorian) // always 7, on any machine
+```
+
+### Foundation Extensions
+
+```swift
+import Foundation_Extensions
 
 let array = [1, 2, 3]
-let value = array[safe: 5] // Returns nil instead of crashing
-let validValue = array[safe: 1] // Returns 2
+array[safe: 5] // nil instead of crashing
+array[safe: 1] // 2
+
+var data = Data()
+data.append("hello")
 ```
 
-## Usage Examples
+## DateComponents
 
-### Date Creation
-
-```swift
-// Basic creation
-let date1 = Date(year: 2025, month: 7, day: 26)
-let date2 = Date(year: 2025, month: 12, day: 25, hour: 15, minute: 30, second: 45)
-
-// Validation - returns nil for invalid dates
-let invalid1 = Date(year: 2025, month: 13, day: 1)        // nil - invalid month
-let invalid2 = Date(year: 2025, month: 2, day: 30)       // nil - Feb doesn't have 30 days
-let invalid3 = Date(year: 2025, month: 1, day: 1, hour: 25) // nil - invalid hour
-```
-
-### Date Arithmetic
+Integer extensions build components, and component arithmetic is
+calendar-relative so it takes a calendar too:
 
 ```swift
-// Basic arithmetic
-let date = Date()
-let tomorrow = date + 1.day
-let lastWeek = date - 1.weekOfYear
-let nextMonth = date + 1.month
-
-// Safe arithmetic (returns optionals)
-let safeResult = date.adding(1.day)        // Date?
-let safeSubtract = date.subtracting(1.weekOfYear) // Date?
-
-// Complex calculations
-let complex = date + 1.year + 6.months + 2.days + 3.hours + 30.minutes
-```
-
-### Integer Extensions for DateComponents
-
-```swift
-// Time components
 1.second, 30.seconds
 1.minute, 45.minutes
 1.hour, 12.hours
 1.day, 7.days
 1.month, 6.months
-1.year, 5.years
+1.year, 2.years
 
-// Calendar components
-1.weekday, 1.quarter
-1.weekOfMonth, 1.weekOfYear
-1.weeksOfYear  // Plural form for weeks
+let combined = 1.day.adding(2.hours, in: calendar)
+let scaled = 1.day.multiplied(by: 3, in: calendar)
+let reversed = 1.day.negated()
+
+// Validation
+DateComponents(month: 13).isValid                              // false
+DateComponents(year: 2025, month: 2, day: 29).isValid(for: calendar) // false
 ```
 
-### Date Boundaries
+## TimeInterval
 
 ```swift
-let date = Date()
-
-// Day boundaries
-let startOfDay = date.startOfDay     // 00:00:00
-let endOfDay = date.endOfDay         // 23:59:59
-
-// Week boundaries
-let startOfWeek = date.startOfWeek
-let endOfWeek = date.endOfWeek
-
-// Month boundaries
-let startOfMonth = date.startOfMonth
-let endOfMonth = date.endOfMonth
-let firstDay = date.firstDayOfMonth  // Same as startOfMonth but different time
-let lastDay = date.lastDayOfMonth    // Last day at 00:00:00
-
-// Year boundaries
-let startOfYear = date.startOfYear
-let endOfYear = date.endOfYear
+let interval: TimeInterval = 90.minutes
+interval.asHours   // 1.5
+TimeInterval.day   // 86400
 ```
-
-### Date State Checks
-
-```swift
-let date = Date()
-
-// Relative to today
-date.isToday      // true if date is today
-date.isTomorrow   // true if date is tomorrow
-date.isYesterday  // true if date was yesterday
-
-// Relative to current periods
-date.isThisWeek   // true if date is in current week
-date.isThisMonth  // true if date is in current month
-date.isThisYear   // true if date is in current year
-
-// Weekend checks
-date.isWeekend    // true if Saturday or Sunday
-```
-
-### Date Comparisons
-
-```swift
-let date1 = Date()
-let date2 = Date() + 1.day
-
-// Readable comparisons
-date2.isAfter(date1)     // true
-date1.isBefore(date2)    // true
-date1.isSameDay(as: date1) // true
-```
-
-### Weekend & Business Days
-
-```swift
-let date = Date()
-
-// Weekend handling
-if date.isWeekend {
-    let nextWorkday = date.ifWeekendThenNextWorkday()
-    let prevWorkday = date.ifWeekendThenPreviousWorkday()
-}
-
-let nextWeekday = date.nextWeekday  // Next Monday-Friday
-
-// Business day calculations
-let fiveBusinessDaysLater = date.addingBusinessDays(5)
-let fiveBusinessDaysEarlier = date.addingBusinessDays(-5)
-```
-
-### Weekday Navigation
-
-```swift
-let date = Date()
-
-// Navigate to specific weekdays (1=Sunday, 2=Monday, ..., 7=Saturday)
-// Returns nil for weekday values outside 1...7
-let nextMonday = date.next(2)!        // Next Monday
-let previousFriday = date.previous(6)! // Previous Friday
-```
-
-### Time Calculations
-
-```swift
-let startDate = Date()
-let endDate = Date() + 10.days
-
-// Calculate differences
-let daysBetween = startDate.daysBetween(endDate) // 10
-let age = birthDate.age() // Age in years from birth date to now
-let ageAt = birthDate.age(at: someDate) // Age at specific date
-```
-
-### TimeInterval Extensions
-
-```swift
-// Constants
-TimeInterval.minute  // 60
-TimeInterval.hour    // 3600
-TimeInterval.day     // 86400
-TimeInterval.week    // 604800
-
-// Conversions
-let twoHours: TimeInterval = 2.hours     // 7200
-let thirtyMinutes: TimeInterval = 30.minutes // 1800
-
-// As conversions
-let interval: TimeInterval = 7200
-interval.asHours    // 2.0
-interval.asMinutes  // 120.0
-interval.asDays     // 0.083...
-
-// Formatted duration
-(30.0).formattedDuration    // "30s"
-(90.0).formattedDuration    // "2m"
-(3660.0).formattedDuration  // "1.0h"
-(86500.0).formattedDuration // "1.0d"
-```
-
-### Relative Date Formatting
-
-```swift
-let now = Date()
-
-// Past dates
-let pastDate = now - 2.hours
-pastDate.timeAgoSince(now)    // "2 hours ago"
-pastDate.relativeFormatted    // "2 hours ago"
-
-// Future dates
-let futureDate = now + 3.days
-futureDate.timeUntil(now)     // "in 3 days"
-futureDate.relativeFormatted  // "in 3 days"
-
-// Special cases
-let yesterday = now - 1.day
-yesterday.relativeFormatted   // "yesterday"
-
-let tomorrow = now + 1.day
-tomorrow.relativeFormatted    // "tomorrow"
-
-// Very recent
-let recent = now - 5.seconds
-recent.relativeFormatted      // "just now"
-```
-
-### Date Component Access
-
-```swift
-let date = Date(year: 2025, month: 7, day: 26, hour: 15, minute: 30)!
-
-// Basic components
-date.year        // 2025
-date.month       // 7
-date.day         // 26
-date.hour        // 15
-date.minute      // 30
-date.second      // 0
-
-// Advanced components
-date.weekday     // 1-7 (Sunday=1)
-date.weekOfYear  // Week number in year
-date.weekOfMonth // Week number in month
-date.quarter     // 1-4
-date.era         // Calendar era
-
-// Calendar & timezone info
-date.calendarIdentifier  // Calendar.Identifier
-date.timeZone           // TimeZone
-```
-
-### DateComponents Arithmetic
-
-```swift
-// Combine components
-let components = 1.day + 2.hours + 30.minutes
-let result = Date() + components
-
-// Multiply components
-let threeDays = 1.day * 3
-let sixMonths = 1.month * 6
-
-// Subtract components
-let difference = 2.weeksOfYear - 3.days
-```
-
-### DateComponents Validation
-
-```swift
-let components = DateComponents(year: 2025, month: 7, day: 26)
-
-// Basic validation
-components.isValid  // true for valid ranges
-
-// Calendar-specific validation
-let calendar = Calendar.current
-components.isValid(for: calendar)  // true if can create valid date
-
-// Invalid examples
-let invalid = DateComponents(month: 13, day: 1)
-invalid.isValid  // false - month 13 doesn't exist
-```
-
-### Date Formatting
-
-```swift
-// DateFormatter extensions
-let formatter = DateFormatter.dateFormat("yyyy-MM-dd")
-let dateString = formatter.string(from: Date()) // "2025-07-26"
-
-// FormatStyle extensions (iOS 15+)
-let formatted = Date().formatted(.dateFormat("MMM d, yyyy")) // "Jul 26, 2025"
-```
-
-## Requirements
-
-- iOS 15.0+ / macOS 12.0+ / tvOS 15.0+ / watchOS 8.0+
-- Swift 5.10+
-- Xcode 15.0+
-
-## Dependencies
-
-This package uses the [Dependencies](https://github.com/pointfreeco/swift-dependencies) framework for dependency injection, making it testable and allowing for calendar mocking in tests.
-
-## Testing
-
-Run tests with:
-
-```bash
-swift test
-```
-
-## Related Packages
-
-### Used By
-
-- [coenttb-web](https://github.com/coenttb/coenttb-web): A Swift package with tools for web development building on swift-web.
-- [swift-types-foundation](https://github.com/coenttb/swift-types-foundation): A Swift package bundling essential type-safe packages for domain modeling.
-- [swift-web-foundation](https://github.com/coenttb/swift-web-foundation): A Swift package with tools to simplify web development.
-
-### Third-Party Dependencies
-
-- [pointfreeco/swift-dependencies](https://github.com/pointfreeco/swift-dependencies): A dependency management library for controlling dependencies in Swift.
 
 ## License
 
-This project is licensed under the Apache 2.0 License. See LICENSE for details.
-
-## Contributing
-
-Contributions are welcome. Please open an issue or submit a pull request.
+Licensed under the [Apache License, Version 2.0](LICENSE.md).

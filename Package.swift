@@ -1,61 +1,50 @@
-// swift-tools-version: 6.3.3
+// swift-tools-version: 6.4
 
 import PackageDescription
 
 extension String {
-    static let dateExtensions: Self = "DateExtensions"
-    static let foundationExtensions: Self = "FoundationExtensions"
+    static let foundationDateExtensions: Self = "Foundation Date Extensions"
+    static let foundationExtensions: Self = "Foundation Extensions"
 }
 
 extension Target.Dependency {
     static var foundationExtensions: Self { .target(name: .foundationExtensions) }
-    static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
-    static var dependenciesTestSupport: Self { .product(name: "Dependencies Test Support", package: "swift-dependencies") }
-    static var dateExtensions: Self { .target(name: .dateExtensions) }
+    static var foundationDateExtensions: Self { .target(name: .foundationDateExtensions) }
 }
 
 let package = Package(
     name: "swift-foundation-extensions",
     platforms: [
-        .iOS("27"),
-        .macOS("27"),
-        .tvOS("27"),
-        .watchOS("27"),
+        .iOS(.v27),
+        .macOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
     ],
     products: [
-        .library(name: .dateExtensions, targets: [.dateExtensions]),
+        .library(name: .foundationDateExtensions, targets: [.foundationDateExtensions]),
         .library(name: .foundationExtensions, targets: [.foundationExtensions]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
     ],
     targets: [
         .target(
             name: .foundationExtensions,
             dependencies: [
-                .dependencies,
-                .dateExtensions
+                .foundationDateExtensions
             ]
         ),
         .testTarget(
             name: .foundationExtensions.tests,
             dependencies: [
-                .foundationExtensions,
-                .dependenciesTestSupport
+                .foundationExtensions
             ]
         ),
         .target(
-            name: .dateExtensions,
-            dependencies: [
-                .dependencies
-            ]
+            name: .foundationDateExtensions
         ),
         .testTarget(
-            name: .dateExtensions.tests,
+            name: .foundationDateExtensions.tests,
             dependencies: [
-                .dateExtensions,
+                .foundationDateExtensions,
                 .foundationExtensions,
-                .dependenciesTestSupport
             ]
         ),
     ]

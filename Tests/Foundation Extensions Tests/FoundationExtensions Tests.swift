@@ -5,19 +5,14 @@
 //  Created by Coen ten Thije Boonkkamp on 30/07/2025.
 //
 
-import Dependencies
-import Dependencies_Test_Support
 import Foundation
 import Testing
 
-@testable import FoundationExtensions
+@testable import Foundation_Extensions
 
 // MARK: - Main Test Suite
 
-@Suite(
-
-    .dependency(\.calendar, Calendar.current)
-)
+@Suite
 struct Test {
 
     // MARK: - Array Initialization Tests

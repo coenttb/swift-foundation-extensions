@@ -9,21 +9,21 @@ import Foundation
 
 // MARK: - TimeInterval Extensions
 
-extension TimeInterval {
+extension Foundation.TimeInterval {
 
     // MARK: - Time Constants
 
     /// One minute in seconds (60).
-    public static var minute: TimeInterval { 60 }
+    public static var minute: Foundation.TimeInterval { 60 }
 
     /// One hour in seconds (3600).
-    public static var hour: TimeInterval { 3600 }
+    public static var hour: Foundation.TimeInterval { 3600 }
 
     /// One day in seconds (86400).
-    public static var day: TimeInterval { 86400 }
+    public static var day: Foundation.TimeInterval { 86400 }
 
     /// One week in seconds (604800).
-    public static var week: TimeInterval { 604800 }
+    public static var week: Foundation.TimeInterval { 604800 }
 
     // MARK: - Time Multiplication
 
@@ -31,33 +31,33 @@ extension TimeInterval {
     ///
     /// ## Example
     /// ```swift
-    /// let twoMinutes: TimeInterval = 2.minutes // 120 seconds
+    /// let twoMinutes: Foundation.TimeInterval = 2.minutes // 120 seconds
     /// ```
-    public var minutes: TimeInterval { self * .minute }
+    public var minutes: Foundation.TimeInterval { self * .minute }
 
     /// Converts this value to hours by multiplying by 3600.
     ///
     /// ## Example
     /// ```swift
-    /// let twoHours: TimeInterval = 2.hours // 7200 seconds
+    /// let twoHours: Foundation.TimeInterval = 2.hours // 7200 seconds
     /// ```
-    public var hours: TimeInterval { self * .hour }
+    public var hours: Foundation.TimeInterval { self * .hour }
 
     /// Converts this value to days by multiplying by 86400.
     ///
     /// ## Example
     /// ```swift
-    /// let twoDays: TimeInterval = 2.days // 172800 seconds
+    /// let twoDays: Foundation.TimeInterval = 2.days // 172800 seconds
     /// ```
-    public var days: TimeInterval { self * .day }
+    public var days: Foundation.TimeInterval { self * .day }
 
     /// Converts this value to weeks by multiplying by 604800.
     ///
     /// ## Example
     /// ```swift
-    /// let twoWeeks: TimeInterval = 2.weeks // 1209600 seconds
+    /// let twoWeeks: Foundation.TimeInterval = 2.weeks // 1209600 seconds
     /// ```
-    public var weeks: TimeInterval { self * .week }
+    public var weeks: Foundation.TimeInterval { self * .week }
 
     // MARK: - Time Conversion
 
@@ -65,7 +65,7 @@ extension TimeInterval {
     ///
     /// ## Example
     /// ```swift
-    /// let interval: TimeInterval = 120
+    /// let interval: Foundation.TimeInterval = 120
     /// interval.asMinutes // 2.0
     /// ```
     public var asMinutes: Double { self / .minute }
@@ -74,7 +74,7 @@ extension TimeInterval {
     ///
     /// ## Example
     /// ```swift
-    /// let interval: TimeInterval = 7200
+    /// let interval: Foundation.TimeInterval = 7200
     /// interval.asHours // 2.0
     /// ```
     public var asHours: Double { self / .hour }
@@ -83,7 +83,7 @@ extension TimeInterval {
     ///
     /// ## Example
     /// ```swift
-    /// let interval: TimeInterval = 172800
+    /// let interval: Foundation.TimeInterval = 172800
     /// interval.asDays // 2.0
     /// ```
     public var asDays: Double { self / .day }
@@ -92,7 +92,7 @@ extension TimeInterval {
     ///
     /// ## Example
     /// ```swift
-    /// let interval: TimeInterval = 1209600
+    /// let interval: Foundation.TimeInterval = 1209600
     /// interval.asWeeks // 2.0
     /// ```
     public var asWeeks: Double { self / .week }

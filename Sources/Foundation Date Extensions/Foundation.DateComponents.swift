@@ -10,28 +10,27 @@ import Foundation
 // MARK: - DateComponents Arithmetic
 
 extension DateComponents {
-    /// Adds two DateComponents together using a calendar dependency.
+    /// Adds two sets of date components together.
     ///
-    /// This operator combines two sets of date components by adding them to a base date
-    /// and calculating the resulting components. This provides intuitive component arithmetic.
+    /// Combines two sets of date components by adding them to a base date and
+    /// calculating the resulting components. Component arithmetic is
+    /// calendar-relative — the length of a month or a week depends on the
+    /// calendar — so the calendar is supplied explicitly.
     ///
     /// - Parameters:
-    ///   - lhs: The first set of date components
-    ///   - rhs: The second set of date components
+    ///   - other: The components to add to these
+    ///   - calendar: The calendar defining component lengths
     /// - Returns: A new `DateComponents` instance representing the sum
     ///
     /// ## Example
     /// ```swift
-    /// let combined = 1.day + 2.hours + 30.minutes
-    /// let result = Date() + combined
+    /// let combined = 1.day.adding(2.hours, in: .current)
     /// ```
-    public static func + (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
-        @Dependency(\.calendar) var calendar  // Dependency-injected calendar
-
+    public func adding(_ other: DateComponents, in calendar: Calendar) -> DateComponents {
         let now = Date()
 
-        guard let intermediateDate = calendar.date(byAdding: lhs, to: now),
-            let finalDate = calendar.date(byAdding: rhs, to: intermediateDate)
+        guard let intermediateDate = calendar.date(byAdding: self, to: now),
+            let finalDate = calendar.date(byAdding: other, to: intermediateDate)
         else {
             return DateComponents()
         }
@@ -39,54 +38,45 @@ extension DateComponents {
         return calendar.dateComponents(Set(DateComponents.allComponents), from: now, to: finalDate)
     }
 
-    /// Subtracts the second DateComponents from the first.
-    ///
-    /// This operator performs component subtraction by negating the right-hand components
-    /// and adding them to the left-hand components.
+    /// Subtracts one set of date components from another.
     ///
     /// - Parameters:
-    ///   - lhs: The date components to subtract from
-    ///   - rhs: The date components to subtract
+    ///   - other: The components to subtract from these
+    ///   - calendar: The calendar defining component lengths
     /// - Returns: A new `DateComponents` instance representing the difference
     ///
     /// ## Example
     /// ```swift
-    /// let difference = 2.weeks - 3.days
-    /// let result = Date() + difference // 11 days from now
+    /// let difference = 2.weeks.subtracting(3.days, in: .current)
     /// ```
-    public static func - (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
-        @Dependency(\.calendar) var calendar
+    public func subtracting(_ other: DateComponents, in calendar: Calendar) -> DateComponents {
         let now = Date()
-        guard let date1 = calendar.date(byAdding: lhs, to: now),
-            let date2 = calendar.date(byAdding: rhs.negated(), to: date1)
+        guard let date1 = calendar.date(byAdding: self, to: now),
+            let date2 = calendar.date(byAdding: other.negated(), to: date1)
         else {
             return DateComponents()
         }
         return calendar.dateComponents(Set(DateComponents.allComponents), from: now, to: date2)
     }
 
-    /// Multiplies DateComponents by an integer factor.
-    ///
-    /// This operator scales all components in the DateComponents by the specified multiplier.
+    /// Scales all components by an integer factor.
     ///
     /// - Parameters:
-    ///   - lhs: The date components to multiply
-    ///   - rhs: The integer multiplier
+    ///   - factor: The integer multiplier
+    ///   - calendar: The calendar defining component lengths
     /// - Returns: A new `DateComponents` instance with scaled values
     ///
     /// ## Example
     /// ```swift
-    /// let threeDays = 1.day * 3
-    /// let sixMonths = 1.month * 6
+    /// let threeDays = 1.day.multiplied(by: 3, in: .current)
     /// ```
-    public static func * (lhs: DateComponents, rhs: Int) -> DateComponents {
-        @Dependency(\.calendar) var calendar
+    public func multiplied(by factor: Int, in calendar: Calendar) -> DateComponents {
         let now = Date()
         var result = DateComponents()
 
         for component in DateComponents.allComponents {
-            if let value = lhs.value(for: component) {
-                result.setValue(value * rhs, for: component)
+            if let value = self.value(for: component) {
+                result.setValue(value * factor, for: component)
             }
         }
 
@@ -95,25 +85,6 @@ extension DateComponents {
         }
 
         return calendar.dateComponents(Set(DateComponents.allComponents), from: now, to: finalDate)
-    }
-
-    /// Multiplies DateComponents by an integer factor (commutative).
-    ///
-    /// This operator provides the commutative version of multiplication,
-    /// allowing `3 * 1.day` syntax in addition to `1.day * 3`.
-    ///
-    /// - Parameters:
-    ///   - lhs: The integer multiplier
-    ///   - rhs: The date components to multiply
-    /// - Returns: A new `DateComponents` instance with scaled values
-    ///
-    /// ## Example
-    /// ```swift
-    /// let threeDays = 3 * 1.day
-    /// let sixMonths = 6 * 1.month
-    /// ```
-    public static func * (lhs: Int, rhs: DateComponents) -> DateComponents {
-        return rhs * lhs
     }
 
     /// Returns a negated version of these date components.
@@ -125,11 +96,10 @@ extension DateComponents {
     ///
     /// ## Example
     /// ```swift
-    /// let forward = 1.day + 2.hours
+    /// let forward = 1.day
     /// let backward = forward.negated()
-    /// let yesterday = Date() + backward
     /// ```
-    func negated() -> DateComponents {
+    public func negated() -> DateComponents {
         var result = self
         for component in DateComponents.allComponents {
             if let value = self.value(for: component) {
@@ -147,7 +117,6 @@ extension DateComponents {
     /// ## Example
     /// ```swift
     /// let noChange = DateComponents.zero
-    /// let sameDate = Date() + noChange
     /// ```
     public static var zero: DateComponents {
         return DateComponents()
