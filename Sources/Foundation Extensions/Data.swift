@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-foundation-extensions
-//
-//  Created by Coen ten Thije Boonkkamp on 13/11/2025.
-//
-
 import Foundation
 
 extension Foundation.Data {

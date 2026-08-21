@@ -1,21 +1,10 @@
-//
-//  File.swift
-//  swift-foundation-extensions
-//
-//  Created by Coen ten Thije Boonkkamp on 30/07/2025.
-//
-
 import Foundation
 import Testing
 
 @testable import Foundation_Extensions
 
-// MARK: - Main Test Suite
-
 @Suite
 struct Test {
-
-    // MARK: - Array Initialization Tests
 
     @Suite
     struct `Safe Array` {

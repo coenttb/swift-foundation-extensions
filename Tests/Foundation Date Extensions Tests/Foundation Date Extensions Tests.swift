@@ -1,18 +1,8 @@
-//
-//  Foundation Date Extensions Tests.swift
-//  Foundation Date Extensions Tests
-//
-//  Exercises the calendar-parameterized date API. Because the calendar is an
-//  explicit argument, these tests pin a fixed Gregorian/UTC calendar and are
-//  deterministic regardless of the host's locale, region, or time zone.
-//
-
 import Foundation
 import Testing
 
 @testable import Foundation_Date_Extensions
 
-/// A fixed calendar so every expectation below is host-independent.
 private let gregorian: Calendar = {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = TimeZone(identifier: "UTC")!
@@ -24,8 +14,6 @@ private let gregorian: Calendar = {
 
 @Suite
 struct `Foundation Date Extensions` {
-
-    // MARK: - Creation
 
     @Suite
     struct Creation {
@@ -76,8 +64,6 @@ struct `Foundation Date Extensions` {
         }
     }
 
-    // MARK: - Arithmetic
-
     @Suite
     struct Arithmetic {
 
@@ -107,8 +93,6 @@ struct `Foundation Date Extensions` {
         }
     }
 
-    // MARK: - Comparisons
-
     @Suite
     struct Comparisons {
 
@@ -133,14 +117,12 @@ struct `Foundation Date Extensions` {
         }
     }
 
-    // MARK: - Component Access
-
     @Suite
     struct `Component Access` {
 
         @Test
         func `Weekday reflects the fixed calendar`() throws {
-            // 26 July 2025 is a Saturday; Gregorian weekdays are 1-based from Sunday.
+
             let saturday = try #require(Date(year: 2025, month: 7, day: 26, in: gregorian))
             #expect(saturday.weekday(in: gregorian) == 7)
 
@@ -160,8 +142,6 @@ struct `Foundation Date Extensions` {
             #expect(date.era(in: gregorian) == 1)
         }
     }
-
-    // MARK: - Period Boundaries
 
     @Suite
     struct `Period Boundaries` {
@@ -201,7 +181,7 @@ struct `Foundation Date Extensions` {
             let date = try #require(Date(year: 2025, month: 2, day: 10, in: gregorian))
 
             #expect(date.firstDayOfMonth(in: gregorian).day(in: gregorian) == 1)
-            // 2025 is not a leap year, so February ends on the 28th.
+
             #expect(date.lastDayOfMonth(in: gregorian).day(in: gregorian) == 28)
         }
 
@@ -231,8 +211,6 @@ struct `Foundation Date Extensions` {
             #expect(end.daysBetween(start, in: gregorian) == -6)
         }
     }
-
-    // MARK: - Weekday Navigation
 
     @Suite
     struct `Weekday Navigation` {
@@ -267,8 +245,6 @@ struct `Foundation Date Extensions` {
             #expect(date.previous(-1, in: gregorian) == nil)
         }
     }
-
-    // MARK: - Weekends and Spans
 
     @Suite
     struct `Weekends and Spans` {
@@ -323,7 +299,6 @@ struct `Foundation Date Extensions` {
             let friday = try #require(Date(year: 2025, month: 7, day: 25, in: gregorian))
             let nextBusinessDay = friday.addingBusinessDays(1, in: gregorian)
 
-            // Friday + 1 business day is the following Monday.
             #expect(nextBusinessDay.day(in: gregorian) == 28)
         }
 
@@ -335,8 +310,6 @@ struct `Foundation Date Extensions` {
             #expect(previousBusinessDay.day(in: gregorian) == 25)
         }
     }
-
-    // MARK: - Relative Description
 
     @Suite
     struct `Relative Description` {
@@ -367,8 +340,6 @@ struct `Foundation Date Extensions` {
     }
 }
 
-// MARK: - DateComponents
-
 @Suite
 struct `Foundation DateComponents Extensions` {
 
@@ -393,12 +364,9 @@ struct `Foundation DateComponents Extensions` {
     func `subtracting removes a component set`() throws {
         let difference = 2.weeksOfYear.subtracting(3.days, in: gregorian)
 
-        // The result is normalized across components: 2 weeks - 3 days is
-        // 11 days, expressed as 1 week and 4 days.
         #expect(difference.weekOfYear == 1)
         #expect(difference.day == 4)
 
-        // ...and it moves a date by 11 whole days.
         let start = try #require(Date(year: 2025, month: 7, day: 1, in: gregorian))
         let moved = try #require(start.adding(difference, in: gregorian))
         #expect(start.daysBetween(moved, in: gregorian) == 11)
@@ -436,7 +404,7 @@ struct `Foundation DateComponents Extensions` {
 
     @Test
     func `Offset-style components validate by range only`() {
-        // No year anchor, so there is nothing to materialize against.
+
         #expect(2.months.isValid(for: gregorian))
     }
 }
