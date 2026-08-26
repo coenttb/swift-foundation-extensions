@@ -1,6 +1,6 @@
 # swift-foundation-extensions
 
-[![CI](https://github.com/swift-foundations/swift-foundation-extensions/workflows/CI/badge.svg)](https://github.com/swift-foundations/swift-foundation-extensions/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-molecules/swift-foundation-extensions/workflows/CI/badge.svg)](https://github.com/swift-molecules/swift-foundation-extensions/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
 *Swift extensions for Foundation types including dates, time intervals, and collections*
@@ -18,7 +18,7 @@ pure and its results deterministic.
 
 If you would rather have the calendar come from the dependency environment —
 `date.isToday` instead of `date.isToday(in: calendar)` — add
-[swift-foundation-dependencies](https://github.com/swift-foundations/swift-foundation-dependencies),
+[swift-foundation-dependencies](https://github.com/swift-compositions/swift-foundation-dependencies),
 which supplies `@Dependency(\.calendar)` and the zero-argument spelling of this
 entire API.
 
@@ -50,7 +50,7 @@ entire API.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-foundations/swift-foundation-extensions.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-foundation-extensions.git", branch: "main")
 ]
 ```
 
