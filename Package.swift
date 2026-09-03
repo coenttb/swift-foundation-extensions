@@ -2,16 +2,6 @@
 
 import PackageDescription
 
-extension String {
-    static let foundationDateExtensions: Self = "Foundation Date Extensions"
-    static let foundationExtensions: Self = "Foundation Extensions"
-}
-
-extension Target.Dependency {
-    static var foundationExtensions: Self { .target(name: .foundationExtensions) }
-    static var foundationDateExtensions: Self { .target(name: .foundationDateExtensions) }
-}
-
 let package = Package(
     name: "swift-foundation-extensions",
     platforms: [
@@ -21,33 +11,32 @@ let package = Package(
         .watchOS(.v27),
     ],
     products: [
-        .library(name: .foundationDateExtensions, targets: [.foundationDateExtensions]),
-        .library(name: .foundationExtensions, targets: [.foundationExtensions]),
+        .library(name: "Foundation Date Extensions", targets: ["Foundation Date Extensions"]),
+        .library(name: "Foundation Extensions", targets: ["Foundation Extensions"]),
     ],
     targets: [
         .target(
-            name: .foundationExtensions,
+            name: "Foundation Extensions",
             dependencies: [
-                .foundationDateExtensions
+                .target(name: "Foundation Date Extensions")
             ]
         ),
         .testTarget(
-            name: .foundationExtensions.tests,
+            name: "Foundation Extensions Tests",
             dependencies: [
-                .foundationExtensions
+                .target(name: "Foundation Extensions")
             ]
         ),
         .target(
-            name: .foundationDateExtensions
+            name: "Foundation Date Extensions"
         ),
         .testTarget(
-            name: .foundationDateExtensions.tests,
+            name: "Foundation Date Extensions Tests",
             dependencies: [
-                .foundationDateExtensions,
-                .foundationExtensions,
+                .target(name: "Foundation Date Extensions"),
+                .target(name: "Foundation Extensions"),
             ]
         ),
     ]
 )
 
-extension String { var tests: Self { self + " Tests" } }
